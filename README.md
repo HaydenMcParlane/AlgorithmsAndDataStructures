@@ -1,2 +1,1 @@
-# DataStructures
-A repository containing reusable data structures implemented in various languages (python, at moment). Other better options may be out there (heap is accessible in Python standard lib) but I'd like experience implementing them.
+My sandbox for learning and experimenting with algorithms and data structures (i.e, dynamic programming, memoization, greedy algorithms, etc).
