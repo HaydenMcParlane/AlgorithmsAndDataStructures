@@ -8,29 +8,26 @@
 #   @author: Hayden McParlane
 import math
 
-def start_dp_problem():
+def find_min_steps():
     n = 11
-    answer = float('+inf')
+    print(min_steps(n))
+
+def min_steps(n):
+    dp = list([0, 0])
+    # Zero indexing in python means that each iteration is considering
+    # desired_value - 1. Therefore, algorithm corrects that.
     for i in range(n):
-        fill_solution_table(i)
-
-    print(_solution_map)
-    print(_solution_map[n - 1])
-
-_solution_map = []
-def fill_solution_table(n):
-    if n <= 1: _solution_map.append(0)
-    else:
         b = c = float('+inf')
-        a = _solution_map[n - 1]
-        if is_divisable_by(2, n):
-            c = _solution_map[int(n / 2)]
-        if is_divisable_by(3, n):
-            b = _solution_map[int(n / 3)]
-        _solution_map.append(min(a, b, c) + 1)
+        a = dp[i]
+        if is_divisable_by(2, i + 1):
+            b = dp[int((i + 1) / 2)]
+        if is_divisable_by(3, i + 1):
+            c = dp[int((i + 1) / 3)]
+        dp.append(min(a, b, c) + 1)
+    return dp[n - 1]
 
 def is_divisable_by(divisibility_factor, number):
     return number % divisibility_factor is 0
 
 if __name__ == "__main__":
-    start_dp_problem()
+    find_min_steps()
