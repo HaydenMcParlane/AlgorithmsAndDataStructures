@@ -43,7 +43,7 @@ def greatest_path(dp):
     i = n - 1
     j = m - 1
     path = [(i, j)]
-    while (i >= 1) and (j >= 1):
+    while (i >= 2) or (j >= 2):
         coordinate = coord(dp[i][j])
         path.append(coordinate)
         i = coordinate[0]
