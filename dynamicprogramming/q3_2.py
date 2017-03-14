@@ -13,7 +13,9 @@ Given this problem,
 
     or  c[i] = max (as j goes from i to n) { c[i], c[j] + 1 }
 
-    (b)
+    (b) Changed values in arrays to values in question.
+        array result:                           [5, 6, 5, 3, 4, 3, 2, 2, 2, 1, 1]
+        largest number of compatible activities: 5
 '''
 
 def main():
