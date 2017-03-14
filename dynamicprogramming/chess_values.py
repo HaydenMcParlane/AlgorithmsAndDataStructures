@@ -10,6 +10,10 @@ def main():
     ]
     print(find_max_path(chessboard))
 
+# This algorithm assumes a chessboard of dimension n X m is represented
+# as a chessboard of dimension n + 1 x m + 1 with the first row and column
+# zeroed. This isn't necessary, but it keeps from needing to validate
+# that indices are non-negative.
 def find_max_path(chessboard):
     dp = []
     n = len(chessboard)
