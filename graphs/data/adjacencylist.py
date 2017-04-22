@@ -6,6 +6,7 @@ _GRAPH = None
 class Node(object):
     def __init__(self, id):
         self.id = id
+        self.parent = None
 
 class Nodes(Enum):
     # A = "A"
