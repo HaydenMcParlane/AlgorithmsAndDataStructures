@@ -9,7 +9,10 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \begin{document} 
-    \begin{algorithm}               
+
+    \section{Algorithm}
+
+    \begin{algorithm}[H]             
         \caption{Find max two such that: \[i < j\] and \[A[i] \leq A[j]\]}
         \label{alg:algorithm-label}
         \begin{algorithmic}[1]
@@ -20,10 +23,66 @@
                     \State $ mid \gets \floor{(p + r)/2} $
                     \State $ leftSolution \gets \Call{FindMax}{A, p, mid} $
                     \State $ rightSolution \gets \Call{FindMax}{A, mid + 1, r} $
-                    \State $ crossingSolution \gets \Call{FindCrossingMax}{A, P, r} $
+                    \State $ crossingSolution \gets \Call{FindCrossingMax}{A, p, mid, r} $
                     \State $ \Return $ \Call{Max}{leftSolution, crossingSolution, rightSolution} $ $
                 \EndIf
             \EndFunction
-        \end{algorithmic}
-    \end{algorithm}
+        \end{algorithmic}        
+    \end{algorithm}    
+
+    \begin{algorithm}[H]               
+        \caption{Perform work to actually find the max two for a given p and r.}
+        \label{alg:algorithm-label}
+        \begin{algorithmic}[1]
+            \Function{FindCrossingMax}{A, p, mid, r}                
+                \State $ i \gets \text{mid} $
+                \State $ j \gets \text{mid} + 1 $            
+                \State $ max \gets  A[i] + A[j]$    
+                \For{k from mid down to p}
+                    \If{ max < A[k] +  A[j]}
+                        \State $ i \gets k $
+                        \State $ max \gets A[k] + A[j] $
+                    \EndIf
+                \EndFor
+
+                \For{k from mid + 1 up to r}
+                    \If{ max < A[k] + A[i] }
+                        \State $ j \gets k $
+                        \State $ max \gets A[k] + A[i] $
+                    \EndIf
+                \EndFor
+
+                \State $ \Return $ (\textit{i, j})
+            \EndFunction
+        \end{algorithmic}        
+    \end{algorithm}    
+        
+    \section{AlgAnalysis}
+
+    This analysis starts off by realizing that this algorithm is recursive.
+    We already know that being that it is implemented following the 
+    divide-and-conquer paradigm. However, it is worth proper definition.
+    The recursive nature of this approach can be broken down as follows:
+
+    \[ \Call{T}{n} = \Call{T}{\floor{n/2}} + \Call{T}{\ceil{n/2}} + \mathcal{O}(1) \]
+
+    Because of the monotonically increasing nature of the complexity function (i.e, 
+    values are only being added and not subtracted) this can be simplified for easy
+    comprehension. We can assume
+    \[ n = 2^k \]
+    as well as eliminating the ceiling and floor function allowing for the following 
+    substitution:
+    \[ 
+        \Call{T}{2^k} = \Call{T}{2^k/2} + \Call{T}{2^k/2} + \mathcal{O}(1) 
+                      = \Call{T}{2^{k-1}} + \Call{T}{2^{k-1}} + \mathcal{O}(1)
+    \]
+    Additionally, if we substitute
+    \[ \Call{W}{k} = \Call{T}{2^k} \]
+    then further simplification can come about, as shown below.
+    \[ 
+        \Call{W}{k} = \Call{W}{k - 1} + \Call{W}{k - 1} + \mathcal{O}(1)
+                    = 2 \cdot \Call{W}{k - 1} + \mathcal{O}(1)
+    \]
+
+
 \end{document}
