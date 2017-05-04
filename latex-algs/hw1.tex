@@ -57,14 +57,14 @@
         \end{algorithmic}        
     \end{algorithm}    
         
-    \section{AlgAnalysis}
+    \section{Complexity Analysis ** REVISIT **}
 
     This analysis starts off by realizing that this algorithm is recursive.
     We already know that being that it is implemented following the 
     divide-and-conquer paradigm. However, it is worth proper definition.
     The recursive nature of this approach can be broken down as follows:
 
-    \[ \Call{T}{n} = \Call{T}{\floor{n/2}} + \Call{T}{\ceil{n/2}} + \mathcal{O}(1) \]
+    \[ \Call{T}{n} = \Call{T}{\floor{n/2}} + \Call{T}{\ceil{n/2}} + \Call{T}{n} + \mathcal{O}(1) \]
 
     Because of the monotonically increasing nature of the complexity function (i.e, 
     values are only being added and not subtracted) this can be simplified for easy
@@ -73,8 +73,9 @@
     as well as eliminating the ceiling and floor function allowing for the following 
     substitution:
     \[ 
-        \Call{T}{2^k} = \Call{T}{2^k/2} + \Call{T}{2^k/2} + \mathcal{O}(1) 
-                      = \Call{T}{2^{k-1}} + \Call{T}{2^{k-1}} + \mathcal{O}(1)
+        \Call{T}{2^k} = \Call{T}{2^k/2} + \Call{T}{2^k/2} + \Call{T}{n} + \mathcal{O}(1) 
+                      = \Call{T}{2^{k-1}} + \Call{T}{2^{k-1}} + \Call{T}{n} + \mathcal{O}(1)
+                      = 2 \cdot \Call{T}{2^{k-1}} + \Call{T}{n} + \mathcal{O}(1)
     \]
     Additionally, if we substitute
     \[ \Call{W}{k} = \Call{T}{2^k} \]
@@ -89,8 +90,7 @@
         \Call{W}{k} &= 2 \cdot \Call{W}{k - 1} + \mathcal{O}(1) &\\
         \Call{W}{k-1} &= 2 \cdot \Call{W}{k - 2} + \mathcal{O}(1) &\\
         \Call{W}{k-2} &= 2 \cdot \Call{W}{k - 3} + \mathcal{O}(1) &\\
-        \Call{W}{k-3} &= 2 \cdot \Call{W}{k - 4} + \mathcal{O}(1) &\\
-        \Call{W}{k-4} &= 2 \cdot \Call{W}{k - 5} + \mathcal{O}(1)
+        \Call{W}{k-3} &= 2 \cdot \Call{W}{k - 4} + \mathcal{O}(1)        
     \end{flalign*}
 
     Therefore,    
@@ -103,6 +103,46 @@
                     + \mathcal{O}(1) &\\
                     &= 2^3 \cdot \Call{W}{k - 3} + 2^2 \cdot \mathcal{O}(1) + 2 \cdot \mathcal{O}(1)
                     + \mathcal{O}(1) &\\
+                    &= 2^3 \cdot ( 2 \cdot \Call{W}{k - 4} + \mathcal{O}(1) ) + 2^2 \cdot \mathcal{O}(1) + 2 \cdot \mathcal{O}(1)
+                    + \mathcal{O}(1) &\\
+                    &= 2^4 \cdot \Call{W}{k - 4} + 2^3 \cdot \mathcal{O}(1) + 2^2 \cdot \mathcal{O}(1) + 2 \cdot \mathcal{O}(1)
+                    + \mathcal{O}(1)
     \end{flalign*}                
+
+    In general, we can see that i recursive calls contributes
+    \[ \Call{W}{i} = 2^i \cdot \Call{W}{k - i} + \sum_{n=0}^{i-1} 2^n \cdot \mathcal{O}(1) \]
+    to the overall complexity. Using the base case as \(\Call{W}{1} = 1\) resulting from the
+    execution of one comparison operation, we can solve the recurrence.
+
+    \begin{flalign*}
+        \Call{W}{k - 1} &= 2^{k - 1} \cdot \Call{W}{k - (k - 1)} + \sum_{n=0}^{k-2} 2^n \cdot \mathcal{O}(1) &\\                    
+                        &= 2^{k - 1} \cdot \Call{W}{1} + \sum_{n=0}^{k-2} 2^n &\\
+                        &= 2^{k - 1} \cdot (1) + \sum_{n=0}^{k-2} 2^n &\\
+                        &= 2^{k - 1} + \sum_{n=0}^{k-2} 2^n &\\
+                        &\leq 2^{k - 1} + \sum_{n=0}^{k-1} 2^n
+    \end{flalign*}
+
+    The last summation shows us an upper bound including a geometric series
+    which further simplifies to
+
+    \begin{flalign*}
+        \Call{W}{k-1} &\leq 2^{k - 1} + \sum_{n=0}^{k-1} 2^n &\\
+                      &= 2^{k - 1} + \frac{2^{(k-1) + 1} - 1}{2 - 1} &\\
+                      &= 2^{k - 1} + 2^k - 1 &\\
+                    %   &= \mathcal{O}(2^k)
+    \end{flalign*}
+
+    Remembering that we set \(n = 2^k\) and solving for k:
+    \begin{flalign*}
+        n = 2^k \implies k = \log_2 n
+    \end{flalign*}
+
+    Finally, substituting k for n:
+    \begin{flalign*}
+        \Call{T}{n} &= 2^{k - 1} + 2^k - 1 &\\
+                    &= 2^{(\log_2 n) - 1} + 2^{log_2 n} - 1
+                    &= 
+    \end{flalign*}
+    
 
 \end{document}
