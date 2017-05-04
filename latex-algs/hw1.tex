@@ -10,7 +10,7 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \begin{document} 
 
-    \section{Algorithm}
+    \section{Pseudocode Algorithm}
 
     \begin{algorithm}[H]             
         \caption{Find max two such that: \[i < j\] and \[A[i] \leq A[j]\]}
@@ -83,6 +83,26 @@
         \Call{W}{k} = \Call{W}{k - 1} + \Call{W}{k - 1} + \mathcal{O}(1)
                     = 2 \cdot \Call{W}{k - 1} + \mathcal{O}(1)
     \]
+    Using the summation method of recurrence resolution we can solve the 
+    recurrence above.
+    \begin{flalign*}
+        \Call{W}{k} &= 2 \cdot \Call{W}{k - 1} + \mathcal{O}(1) &\\
+        \Call{W}{k-1} &= 2 \cdot \Call{W}{k - 2} + \mathcal{O}(1) &\\
+        \Call{W}{k-2} &= 2 \cdot \Call{W}{k - 3} + \mathcal{O}(1) &\\
+        \Call{W}{k-3} &= 2 \cdot \Call{W}{k - 4} + \mathcal{O}(1) &\\
+        \Call{W}{k-4} &= 2 \cdot \Call{W}{k - 5} + \mathcal{O}(1)
+    \end{flalign*}
 
+    Therefore,    
+
+    \begin{flalign*}
+        \Call{W}{k} &= 2 \cdot \Call{W}{k - 1} + \mathcal{O}(1) &\\
+                    &= 2 \cdot ( 2 \cdot \Call{W}{k - 2} + \mathcal{O}(1) ) + \mathcal{O}(1) &\\
+                    &= 2^2 \cdot \Call{W}{k - 2} + 2 \cdot \mathcal{O}(1) + \mathcal{O}(1)   &\\
+                    &= 2^2 \cdot (2 \cdot \Call{W}{k - 3} + \mathcal{O}(1)) + 2 \cdot \mathcal{O}(1) 
+                    + \mathcal{O}(1) &\\
+                    &= 2^3 \cdot \Call{W}{k - 3} + 2^2 \cdot \mathcal{O}(1) + 2 \cdot \mathcal{O}(1)
+                    + \mathcal{O}(1) &\\
+    \end{flalign*}                
 
 \end{document}
