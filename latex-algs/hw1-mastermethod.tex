@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\begin{document} 
+
+    \section{Pseudocode Algorithm}
+
+    \begin{algorithm}[H]             
+        \caption{Find max two such that: \[i < j\] and \[A[i] \leq A[j]\]}
+        \label{alg:algorithm-label}
+        \begin{algorithmic}[1]
+            \Function{FindMax}{A, p, r}
+                \If{ p equals r}
+                    \Return $ (-\infty, -\infty) $ 
+                \Else
+                    \State $ mid \gets \floor{(p + r)/2} $
+                    \State $ leftSolution \gets \Call{FindMax}{A, p, mid} $
+                    \State $ rightSolution \gets \Call{FindMax}{A, mid + 1, r} $
+                    \State $ crossingSolution \gets \Call{FindCrossingMax}{A, p, mid, r} $
+                    \State $ \Return $ \Call{Max}{leftSolution, crossingSolution, rightSolution} $ $
+                \EndIf
+            \EndFunction
+        \end{algorithmic}        
+    \end{algorithm}    
+
+    \begin{algorithm}[H]               
+        \caption{Perform work to actually find the max two for a given p and r.}
+        \label{alg:algorithm-label}
+        \begin{algorithmic}[1]
+            \Function{FindCrossingMax}{A, p, mid, r}                
+                \State $ i \gets \text{mid} $
+                \State $ j \gets \text{mid} + 1 $            
+                \State $ max \gets  A[i] + A[j]$    
+                \For{k from mid down to p}
+                    \If{ max < A[k] +  A[j]}
+                        \State $ i \gets k $
+                        \State $ max \gets A[k] + A[j] $
+                    \EndIf
+                \EndFor
+
+                \For{k from mid + 1 up to r}
+                    \If{ max < A[k] + A[i] }
+                        \State $ j \gets k $
+                        \State $ max \gets A[k] + A[i] $
+                    \EndIf
+                \EndFor
+
+                \State $ \Return $ (\textit{i, j})
+            \EndFunction
+        \end{algorithmic}        
+    \end{algorithm}    
+        
+    \section{Complexity Analysis}
+
+    We can think of this algorithm in terms of three parts: left call, right call
+    and a function that finds the answer which crosses over the from the left 
+    to the right. With that in mind, the time complexity of this algorithm can
+    be modeled using the following equation:
+
+    \begin{flalign*}
+        \Call{T}{n} &= \Call{T}{\floor{n/2}} + \Call{T}{\ceil{n/2}} + \Call{f}{n} + \mathcal{O}(1)
+    \end{flalign*}
+
+    Recognizing that the time complexity is monotonically increasing and
+    is bounded by the functions and not the constant \(\mathcal{O}(1)\), we can
+    eliminate the floor and ceiling functions and simplify the constant time 
+    element as follows:
+
+    \begin{flalign*}
+        \Call{T}{n} &= \Call{T}{n/2} + \Call{T}{n/2} + n + 1 &\\
+                    &= 2 \cdot \Call{T}{n/2} + n +  1
+    \end{flalign*}
+
+    Using the master method it is evident that
+    
+    \begin{flalign*}
+        a &= 2 &\\
+        b &= 2 &\\    
+        \Call{f}{n} &= n
+    \end{flalign*}
+
+    Therefore
+
+    \begin{flalign*}
+        \Call{f}{n} &= \theta(n^{log_b a}) &\\
+                    &= \theta(n^{log_2 2}) &\\
+                    &= \theta(n^1) &\\
+                    &= \theta(n)
+    \end{flalign*}
+
+    Implying that we should use rule 2 of the master method. Using rule two,
+    we determine the following:
+
+    \begin{flalign*}
+        \Call{T}{n} &= \theta(n^{log_b a} \cdot log_2 n) &\\
+                    &= \theta(n \cdot log_2 n)
+    \end{flalign*}
+
+
+\end{document}
