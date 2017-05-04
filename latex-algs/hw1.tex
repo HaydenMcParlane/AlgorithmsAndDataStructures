@@ -1,0 +1,29 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+\begin{document} 
+    \begin{algorithm}               
+        \caption{Find max two such that: \[i < j\] and \[A[i] \leq A[j]\]}
+        \label{alg:algorithm-label}
+        \begin{algorithmic}[1]
+            \Function{FindMax}{A, p, r}
+                \If{ p equals r}
+                    \Return $ (-\infty, -\infty) $ 
+                \Else
+                    \State $ mid \gets \floor{(p + r)/2} $
+                    \State $ leftSolution \gets \Call{FindMax}{A, p, mid} $
+                    \State $ rightSolution \gets \Call{FindMax}{A, mid + 1, r} $
+                    \State $ crossingSolution \gets \Call{FindCrossingMax}{A, P, r} $
+                    \State $ \Return $ \Call{Max}{leftSolution, crossingSolution, rightSolution} $ $
+                \EndIf
+            \EndFunction
+        \end{algorithmic}
+    \end{algorithm}
+\end{document}
