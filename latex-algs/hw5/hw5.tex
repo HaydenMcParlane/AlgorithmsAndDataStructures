@@ -1,0 +1,75 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{tikz}
+
+\newcommand\encircle[1]{
+    \tikz[baseline=(X.base)]
+        \node (X) [draw, shape=circle, inner sep=0]{\strut #1};
+}
+
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{center}
+        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+        \large\textbf{Homework 5} \\
+        \large\textit{Author: Hayden McParlane}
+    \end{center}
+
+\end{titlepage}
+
+\encircle{1} <problem statement>
+
+\encircle{1.a} Prove that this decision problem is in the NP-class. \\ \\
+Proof that a decision problem is in the NP-class simply requires writing a
+verification algorithm that can verify a given certificate in polynomial
+time.
+
+\begin{algorithm}[H]
+    \caption{
+        A verification algorithm for the problem above. This algorithm assumes
+        that the projects in need of completion, P, are known to keep its format
+        consistent with typical NP-class verification algorithms.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{Verify}{C, k}
+            \For{project in P}
+                \For{company in k}
+                    \State $ \text{1. Retrieve projects from L completable by the current company.} $
+                    \State $ \text{2. Remove the project from the project list.} $
+                \EndFor
+            \EndFor
+            \If{project list is empty}
+                \State $ \Return \text{ Yes} $
+            \Else
+                \State $ \Return \text{ No} $
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+This algorithm proves that the problem is in the NP-class because it executes the
+verification in polynomial time. For each project chosen, all of the companies
+are checked to determine which projects that company can complete. If a company is
+found that can complete every project, the algorithm returns yes. Otherwise, no is
+returned. This is polynomially related to the number of projects in P because the
+problem states that all of the projects can be completed but that none of the
+companies can complete all of the projects alone. This means that the upper bound
+on the list of projects associated with a given company is \(|P| = m\). So,
+even if each company could complete all of the projects the verification would be
+bound by \(|P| \cdot |P|^k = |P|^{k+1} = m^{k+1} = m^{constant}\). TODO: Verify proof!!!
+
+\encircle{1.b} Prove that this decision problem is NP-hard. (Hint: reduce the vertex 
+cover problem to this problem.) \\
+
+
+\encircle{1.c}
+
+\end{document}
