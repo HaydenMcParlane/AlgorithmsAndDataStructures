@@ -24,7 +24,7 @@
 
 \end{titlepage}
 
-\encircle{1} <problem statement>
+% \encircle{1} <problem statement>
 
 \encircle{1.a} Prove that this decision problem is in the NP-class. \\ \\
 Proof that a decision problem is in the NP-class simply requires writing a
@@ -63,13 +63,66 @@ returned. This is polynomially related to the number of projects in P because th
 problem states that all of the projects can be completed but that none of the
 companies can complete all of the projects alone. This means that the upper bound
 on the list of projects associated with a given company is \(|P| = m\). So,
-even if each company could complete all of the projects the verification would be
-bound by \(|P| \cdot |P|^k = |P|^{k+1} = m^{k+1} = m^{constant}\). TODO: Verify proof!!!
+even if each company could complete all of the projects the verification have the upper
+bound \(|P| \cdot (!|P|)^k \leq |P| \cdot |P|^k = |P|^{k+1} = m^{k+1} = m^{constant}\).
+Therefore, this problem is no harder than the NP-class and belongs to the NP-class.\\
 
-\encircle{1.b} Prove that this decision problem is NP-hard. (Hint: reduce the vertex 
-cover problem to this problem.) \\
+% \encircle{1.b} Prove that this decision problem is NP-hard. (Hint: reduce the vertex 
+% cover problem to this problem.) \\
 
+% TODO: \\
 
-\encircle{1.c}
+\encircle{1.c} Suppose you have an algorithm \Call{A}{P, m, C, n, k} that can
+determine, for any given integer k, whether k companies are enough to handle all 
+projects. (It gives a "yes" or "no" answer.). Please show how we can use the
+algorithm \Call{A}{P, m, C, n, k} to select the smallest number k of companies
+to finish all m projects so we can maximally save our budget. You need to output
+the companies that have been selected by your method (algorithm). \\
+
+\begin{algorithm}[H]
+    \caption{
+        An algorithm that uses the given function to find
+        the minimum cost. This algorithm assumes that the cost of each
+        company is the same.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{FindMinCost}{P, m, C, n}                        
+            \State $ k \gets n $            
+            \Repeat
+                \State $ k \gets k - 1 $                
+            \Until{\Call{A}{P, m, C, n, k} equals NO}            
+            \State $ k \gets k + 1 $            
+            
+            \While{ \Call{sizeOf}{C} > 0}
+                \State $ current \gets \Call{pop}{C} $
+                \If{ \Call{A}{P, n, C, n, k} equals NO}
+                    \State $ C \gets current \bigcup{} C $
+                    \State $ \text{break from while} $                                                            
+                \EndIf
+            \EndWhile 
+            \State $ \Return \text{ C} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+This algorithm starts off by giving k a value of n. The problem statement
+states that n companies will be able to complete all of the projects so we
+know the result of a call to A will be YES giving us the ability to skip
+that call. Each iteration of the repeat decrements k until the call to A
+returns No at which point the loop breaks. When this occurs, the current
+value of k received a No so we can assume that the smallest k would be the
+previous k value; k + 1. Therefore, k is assigned k + 1. \\
+
+The while-loop following that assignment ensures that companies are still
+present in C. If there are companies present, a next company is popped off
+of C at which point another call to A is done to determine if removal of
+that company from C resulted in No. During the while portion, k is kept
+constant while the elements of C vary. When the call to A is done and 
+results in no in the while-loop, we can assume that the previously eliminated
+company was vital and needs to be in the solution.
+
+% \encircle{2} <problem statement>
+
 
 \end{document}
