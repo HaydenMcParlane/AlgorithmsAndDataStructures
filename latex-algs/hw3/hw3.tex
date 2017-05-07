@@ -1,0 +1,94 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumitem}
+\usepackage{blkarray}
+\usepackage{tabu}
+% \usepackage{tabularx}
+\usepackage{tikz}
+
+\newcommand\encircle[1]{
+    \tikz[baseline=(X.base)]
+        \node (X) [draw, shape=circle, inner sep=0]{\strut #1};
+}
+
+\begin{document}
+
+% \begin{titlepage}
+
+%     \begin{center}
+%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\        
+%         \large\textbf{Homework 3} \\        
+%         \large\textit{Author: Hayden McParlane}
+%     \end{center}
+
+% \end{titlepage}
+
+% \encircle{1} Find an optimal parenthesization of a matrix chain multiplication whose
+% sequence of dimensions is (7, 10, 9, 5, 12, 6). \\
+
+% We begin by naming the matrices which concern us. We will assume
+
+% \begin{flalign*}
+%     \textbf{A} \text{ is 7 x 10 matrix} \\    
+%     \textbf{B} \text{ is 10 x 9 matrix} \\
+%     \textbf{C} \text{ is 9 x 5 matrix} \\
+%     \textbf{D} \text{ is 5 x 12 matrix} \\
+%     \textbf{E} \text{ is 12 x 6 matrix} \\
+% \end{flalign*}
+
+% As is customary in dynamic programming, we will use a results
+% matrix to hold solutions that are found during the process.
+% We will also create a second matrix that will store the position
+% of the parenthesis in order to retrace our results and return
+% the optimal solution to the problem itself. We will call this
+% matrix \textbf{S}.
+
+% Initialization of our initial matrix will be done and will zero
+% all of the 
+
+% \[
+% \begin{blockarray}{cccccc}
+% \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D} & \textbf{E} \\
+% \begin{block}{(ccccc)c}
+%   0 & 0 & 0 & 0 & 0 & \textbf{E} \\
+%   0 & 0 & 0 & 0 & 0 & \textbf{D} \\
+%   0 & 0 & 0 & 0 & 0 & \textbf{C} \\
+%   0 & 0 & 0 & 0 & 0 & \textbf{B} \\
+%   0 & 0 & 0 & 0 & 0 & \textbf{A} \\
+% \end{block}
+% \end{blockarray}
+%  \]
+
+\encircle{2} Suppose n activities apply for using a common resource. 
+Activity \(a_i\) \((1 \leq i \leq n)\) has a starting time \(S[i]\) 
+and a finish time \(F[i]\) such that \(0 < S[i] < F[i]\). Two activities
+\(a_i\) and \(a_j\) \((1 \leq i, j \leq n)\) are compatible if intervals
+[\(S[i], F[i]\)) and [\(S[j], F[j]\)) do not overlap. We assume the 
+activities have been sorted such that \(S[1] \leq S[2] \leq ... \leq S[n]\).
+\begin{enumerate}[label=\Alph*]
+    \item Design an \(\mathcal{O}(n^2)\) dynamic programming algorithm
+    to find a set of compatible activities such that the total amount
+    of time the resource is used by these compatible activities is
+    maximized. You need to define the sub-problems, establish the
+    inductive formula and show the initial conditions. Pseudocode is
+    not required.
+    \item Apply your algorithm to the following set of activities:
+    \begin{center}
+        \begin{tabular}{ | l | c | c | c | c | c | c | c | c | c | c | r |}
+            \hline
+            i & 1 & 2 & 3 & 4 & 5 & 6 & 7 & 8 & 9 & 10 & 11 \\ \hline
+            S[i] & 2 & 3 & 5 & 6 & 7 & 9 & 10 & 12 & 13 & 14 & 16 \\ \hline
+            F[i] & 6 & 5 & 7 & 10 & 8 & 13 & 16 & 14 & 14 & 18 & 20 \\ 
+            \hline
+        \end{tabular}
+    \end{center}
+    
+\end{enumerate}
+
+
+\end{document}
