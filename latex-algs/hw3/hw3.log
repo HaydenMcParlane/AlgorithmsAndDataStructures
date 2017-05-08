@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.3)  7 MAY 2017 20:28
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.3)  7 MAY 2017 21:00
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -629,17 +629,22 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 134--140
+Underfull \hbox (badness 10000) in paragraph at lines 138--144
 
  []
 
-[2] (./hw3.aux) ) 
+[2]
+Underfull \hbox (badness 10000) in paragraph at lines 147--148
+
+ []
+
+[3] (./hw3.aux) ) 
 Here is how much of TeX's memory you used:
- 14655 strings out of 493029
- 277937 string characters out of 6136235
- 329966 words of memory out of 5000000
- 17909 multiletter control sequences out of 15000+600000
- 12761 words of font info for 32 fonts, out of 8000000 for 9000
+ 14658 strings out of 493029
+ 277975 string characters out of 6136235
+ 327966 words of memory out of 5000000
+ 17911 multiletter control sequences out of 15000+600000
+ 13447 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,10n,54p,441b,507s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf/fonts/enc/dvips/cm-super/cm-super-t1.enc}</u
@@ -651,11 +656,12 @@ fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/cm-supe
 r/sfbx1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr
 /share/texmf/fonts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/t
-ype1/public/cm-super/sfrm1000.pfb>
-Output written on hw3.pdf (2 pages, 122222 bytes).
+ype1/public/cm-super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super
+/sfti1000.pfb>
+Output written on hw3.pdf (3 pages, 144359 bytes).
 PDF statistics:
- 55 PDF objects out of 1000 (max. 8388607)
- 40 compressed objects within 1 object stream
+ 62 PDF objects out of 1000 (max. 8388607)
+ 45 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
