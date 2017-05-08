@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.3)  8 MAY 2017 00:08
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2017.5.3)  8 MAY 2017 12:48
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -556,6 +556,9 @@ LaTeX Warning: Label `alg:algorithm-label' multiply defined.
 
 LaTeX Warning: Label `alg:algorithm-label' multiply defined.
 
+
+LaTeX Warning: Label `alg:algorithm-label' multiply defined.
+
 )
 \openout1 = `hw3.aux'.
 
@@ -659,16 +662,16 @@ Underfull \hbox (badness 10000) in paragraph at lines 161--162
 
  []
 
-[3] [4] [5] (./hw3.aux)
+[3] [4] [5] [6] (./hw3.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 14667 strings out of 493029
- 278109 string characters out of 6136235
- 330003 words of memory out of 5000000
- 17920 multiletter control sequences out of 15000+600000
+ 14671 strings out of 493029
+ 278169 string characters out of 6136235
+ 330005 words of memory out of 5000000
+ 17924 multiletter control sequences out of 15000+600000
  13447 words of font info for 33 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  55i,10n,54p,441b,507s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -682,10 +685,10 @@ sfonts/cm/cmsy7.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx1000.pfb>
 </usr/share/texmf/fonts/type1/public/cm-super/sfcc1000.pfb></usr/share/texmf/fo
 nts/type1/public/cm-super/sfrm0800.pfb></usr/share/texmf/fonts/type1/public/cm-
 super/sfrm1000.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfti1000.pfb>
-Output written on hw3.pdf (5 pages, 159689 bytes).
+Output written on hw3.pdf (6 pages, 163411 bytes).
 PDF statistics:
- 68 PDF objects out of 1000 (max. 8388607)
- 49 compressed objects within 1 object stream
+ 71 PDF objects out of 1000 (max. 8388607)
+ 51 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 

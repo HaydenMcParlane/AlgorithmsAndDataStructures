@@ -173,7 +173,7 @@ are compatible.
 
 \pagebreak
 
-\encircle{3}
+\encircle{3} TODO: Problem Statement
 
 \begin{algorithm}[H]
     \caption{
@@ -290,5 +290,49 @@ of the algorithm is as follows:
 \begin{flalign*}
     T(n) &= \theta(n \cdot m) &\\
 \end{flalign*}
+
+\pagebreak
+
+\encircle{4} TODO: Problem Statement
+
+\textbf{4.A}
+
+\begin{algorithm}[H]
+    \caption{
+        A dynamic programming implementation used to
+        find the welding order.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MinimizeWeldCost}{W, n}
+
+            % Initialize will zero out array
+            \State $ M \gets P \gets \emptyset $
+            \Call{Initialize}{M, P}
+            \\
+            \For{level from 2 to n}
+                \For{i from 1 to n - level + 1}
+                    \State $ j \gets i + level - 1 $                    
+                    \State $ M[i, j] \gets \infty $
+                    \For{k from i to j - 1}
+                        \State $ q \gets \Call{WeldingCost}{i, k} + \Call{WeldingCost}{k + 1, j} $
+                        \If{q < M[i, j]}
+                            \State $ M[i, j] \gets q $
+                            \State $ P[i, j] \gets k $
+                        \EndIf
+                    \EndFor                    
+                \EndFor
+            \EndFor
+            \\
+            \State $ \Return \text{ M and P} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+
+\textbf{4.B}
+
+\encircle{5} TODO: Problem Statement
+
 
 \end{document}
