@@ -213,4 +213,67 @@ are compatible.
     \end{algorithmic}
 \end{algorithm}
 
+This algorithm utilizes the following helpers:
+
+\begin{algorithm}[H]
+    \caption{
+        Returns the value of the square above inputs i and j.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{TopValue}{A, i, j}
+            \If{\Call{IsNotNil}{A[i - 1, j]}}
+                \State $ \Return \text{ A[i - 1, j]} $
+            \Else
+                \State $ \Return \text{ -\infty} $
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{
+        Returns the value of the square to the left of inputs 
+        i and j.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{LeftValue}{A, i, j}
+            \If{\Call{IsNotNil}{A[i, j - 1]}}
+                \State $ \Return \text{ A[i, j - 1]} $
+            \Else
+                \State $ \Return \text{ -\infty} $
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+and similarly
+
+\begin{algorithm}[H]
+    \caption{
+        Returns the indices that point to the square atop
+        of square (i, j).
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{Top}{i, j}
+            \State $ \Return \text{ (i - 1, j)} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{
+        Returns the indices that point to the square sitting left
+        of square (i, j).
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{LeftValue}{A, i, j}
+            \State $ \Return \text{ (i, j - 1)} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
 \end{document}
