@@ -225,7 +225,7 @@ This algorithm utilizes the following helpers:
             \If{\Call{IsNotNil}{A[i - 1, j]}}
                 \State $ \Return \text{ A[i - 1, j]} $
             \Else
-                \State $ \Return \text{ -\infty} $
+                \State $ \Return \text{ -}\infty $
             \EndIf
         \EndFunction
     \end{algorithmic}
@@ -242,7 +242,7 @@ This algorithm utilizes the following helpers:
             \If{\Call{IsNotNil}{A[i, j - 1]}}
                 \State $ \Return \text{ A[i, j - 1]} $
             \Else
-                \State $ \Return \text{ -\infty} $
+                \State $ \Return \text{ -}\infty $
             \EndIf
         \EndFunction
     \end{algorithmic}
@@ -270,10 +270,25 @@ and similarly
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
-        \Function{LeftValue}{A, i, j}
+        \Function{Left}{A, i, j}
             \State $ \Return \text{ (i, j - 1)} $
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
+
+This solution to the stated problem results in the relations:
+\begin{flalign*}
+    A(i, j) &= \max{ \{A(i - 1, j), A(i, j - 1) \}} + V[i, j] &\\
+    A(1, 1) &= V[1, 1]
+\end{flalign*}
+
+Here the \textbf{inductive formula} sits above the \textbf{initial condition}.
+The complexity of this algorithm is quite simple to analyze. No recursive calls
+are made. The only major contributors to the complexity are the for-loops one
+of which climbs from 1 to n and the other from 1 to m. Therefore, the \textbf{complexity}
+of the algorithm is as follows:
+\begin{flalign*}
+    T(n) &= \theta(n \cdot m) &\\
+\end{flalign*}
 
 \end{document}
