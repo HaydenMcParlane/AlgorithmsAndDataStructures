@@ -175,9 +175,42 @@ are compatible.
 
 \encircle{3}
 
-
-
-
-\textbf{}
+\begin{algorithm}[H]
+    \caption{
+        A dynamic programming algorithm usable to solve the chess board
+        problem above.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MaxCoinValue}{A, V, n, m}
+            \State $ P \gets \emptyset $            
+            \State $ \Call{Initialize}{P} $ \\            
+            \For{i from 1 to n}
+                \For{j from 1 to m}
+                    \If{ \Call{TopValue}{A, i, j} > \Call{LeftValue}{A, i, j} }
+                        \State $ A[i, j] \gets V[i, j] + \Call{TopValue}{A, i, j} $                
+                        \State $ P[i, j] \gets \Call{Top}{i, j} $
+                    \Else
+                        \State $ A[i, j] \gets V[i, j] + \Call{LeftValue}{A, i, j} $
+                        \State $ P[i, j] \gets \Call{Left}{i, j} $
+                    \EndIf
+                \EndFor                
+            \EndFor            
+            \\            
+            \State $ i \gets n $
+            \State $ j \gets m $
+            \State $ path \gets \emptyset $
+            \State $ \Call{Push}{path, (i, j)} $
+            \Repeat
+                \State $ previous \gets P[i, j] $
+                \State $ \Call{Push}{path, previous} $
+                \State $ i \gets \Call{IValue}{previous} $
+                \State $ j \gets \Call{JValue}{previous} $
+            \Until{\Call{IsNill}{P, i, j}}
+            \\
+            \State $ \Return \text{ path} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
 
 \end{document}
