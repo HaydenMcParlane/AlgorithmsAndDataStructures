@@ -304,18 +304,20 @@ of the algorithm is as follows:
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
-        \Function{MinimizeWeldCost}{W, n}
-
-            % Initialize will zero out array
+        \Function{MinimizeWeldCost}{W, n}            
             \State $ M \gets P \gets \emptyset $
             \Call{Initialize}{M, P}
             \\
             \For{level from 2 to n}
                 \For{i from 1 to n - level + 1}
-                    \State $ j \gets i + level - 1 $                    
+                    \State $ j \gets i + level - 1 $                 
                     \State $ M[i, j] \gets \infty $
                     \For{k from i to j - 1}
-                        \State $ q \gets \Call{WeldingCost}{i, k} + \Call{WeldingCost}{k + 1, j} $
+                        \State $ smallerRod \gets (i, k) $
+                        \If{\Call{WeldingCost{smallerRod}} > \Call{WeldingCost}{k + 1, j}}
+                            \State $ smallerRod \gets (k + 1, j) $
+                        \EndIf
+                        \State $ q \gets \Call{Cost}{i, k} + \Call{Cost}{k + 1, j} + \Call{WeldingCost}{smallerRod, i, j) $
                         \If{q < M[i, j]}
                             \State $ M[i, j] \gets q $
                             \State $ P[i, j] \gets k $
