@@ -86,9 +86,46 @@ activities have been sorted such that \(S[1] \leq S[2] \leq ... \leq S[n]\).
             F[i] & 6 & 5 & 7 & 10 & 8 & 13 & 16 & 14 & 14 & 18 & 20 \\ 
             \hline
         \end{tabular}
-    \end{center}
-    
+    \end{center}    
 \end{enumerate}
+
+\encircle{2(A)} 
+
+\begin{algorithm}[H]
+    \caption{
+        A dynamic programming algorithm usable to solve the activity problem above
+        in \(\mathcal{O}(n^2)\) time. In this algorithm...
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MaxActivities}{S[1..n], F[1..n]}
+            \State $ M \gets P \gets \emptyset $        
+            \State $ \Call{Initialize}{M, P} $            
+            
+            \For{i from 1 to n}   \Comment{Locate max for \(m_i\)}
+                \State $ max \gets M[i] $                
+                \For{j from 1 to i}
+                    \If{max < M[j] and F[j] < S[i]}
+                        \State $ max \gets M[j] $
+                        \State $ P[i] \gets j $
+                    \EndIf
+                \EndFor
+            \EndFor
+            
+            \State $ max \gets 1 $ \Comment{Find global maximum}                        
+            \For{i from 2 to n}      
+                \If{M[max] < M[i]}
+                    \State $ max \gets i $                    
+                \EndIf
+            \EndFor
+
+            \State $ \Return \text{ max, P}$
+
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+
 
 
 \end{document}
