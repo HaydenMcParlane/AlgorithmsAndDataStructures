@@ -5,10 +5,28 @@
 \usepackage{mathtools}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath, amsfonts}
+\usepackage{tikz}
+
+\newcommand\encircle[1]{
+    \tikz[baseline=(X.base)]
+        \node (X) [draw, shape=circle, inner sep=0]{\strut #1};
+}
 
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \begin{document} 
+
+% \begin{titlepage}
+
+%     \begin{center}
+%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+%         \large\textbf{Homework <num-here>} \\        
+%         \large\textit{Author: Hayden McParlane}
+%     \end{center}
+
+% \end{titlepage}
+
+\encircle{3} TODO: Problem Statement
 
     \section{Pseudocode Algorithm}
 
@@ -101,7 +119,93 @@
     \begin{flalign*}
         \Call{T}{n} &= \theta(n^{log_b a} \cdot log_2 n) &\\
                     &= \theta(n \cdot log_2 n)
-    \end{flalign*}
+    \end{flalign*}    
+
+\pagebreak
+\encircle{4} TODO: Problem Statement
+
+\begin{algorithm}[H]
+    \caption{
+        TODO        
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{FindDominating}{A, p, r}        
+        \If{p equals r}
+            \State $ count \gets 1 $
+            \State $  $
+            \State $ \Return \text{ \textit{count} and \textit{}} $
+        \Else
+            \State $ threshold \gets \ceil{n/2} $
+            \State $ mid \gets \floor{(p + r) / 2} $
+            \State $ left \gets \Call{FindDominating}{A, p, mid} $
+            \State $ right \gets \Call{FindDominating}{A, mid + 1, r} $
+            \\
+
+            \\
+            \State $ \Return \text{ } $
+        \EndIf
+
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\pagebreak
+\encircle{5} TODO: Problem Statement
+
+\begin{algorithm}[H]
+    \caption{
+        TODO;
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MaxSubsequence}{A, p, r}            
+            \If{p equals r}                
+                \State $ \Return \text{ p, r and A[p]} $
+            \Else
+                \State $ mid \gets \floor{(p + r)/2} $
+                \State $ left \gets \Call{MaxSubsequence}{A, p, mid} $
+                \State $ right \gets \Call{MaxSubsequence}{A, mid + 1, r} $
+                \State $ crossing \gets \Call{MaxCrossingSubsequence}{A, p, mid, r} $
+                \State $ \Return \text{ \(\max(left, crossing, right)\)} $
+            \EndIf            
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{
+        TODO;
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MaxCrossingSubsequence}{A, p, mid, r}
+            \State $ i \gets mid $
+            \State $ j \gets mid + 1 $
+            \State $ max \gets A[i] + A[j] $
+            \State $ sequenceSum \gets max $
+            \\            
+            \For{k from mid - 1 to p}
+                \State $ sequenceSum \gets sequenceSum + A[k] $
+                \If{sequenceSum > max}
+                    \State $ max \gets sequenceSum $
+                    \State $ i \gets k $
+                \EndIf
+            \EndFor
+            \\
+            \For{k from mid + 2 to r}
+                \State $ sequenceSum \gets sequenceSum + A[k] $
+                \If{sequenceSum > max}
+                    \State $ max \gets sequenceSum $
+                    \State $ j \gets k $
+                \EndIf
+            \EndFor
+            \\
+            \State $ \Return \text{ i, j and max} $            
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
 
 
 \end{document}
