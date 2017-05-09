@@ -18,15 +18,15 @@
 
 \begin{document}
 
-% \begin{titlepage}
+\begin{titlepage}
 
-%     \begin{center}
-%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\        
-%         \large\textbf{Homework 3} \\        
-%         \large\textit{Author: Hayden McParlane}
-%     \end{center}
+    \begin{center}
+        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\        
+        \large\textbf{Homework 3} \\        
+        \large\textit{Author: Hayden McParlane}
+    \end{center}
 
-% \end{titlepage}
+\end{titlepage}
 
 % \encircle{1} Find an optimal parenthesization of a matrix chain multiplication whose
 % sequence of dimensions is (7, 10, 9, 5, 12, 6). \\
@@ -173,7 +173,16 @@ are compatible.
 
 \pagebreak
 
-\encircle{3} TODO: Problem Statement
+\encircle{3} There is a coin in each cell A[i, j] of an n x m chess board,
+\(1 \leq i \leq n\) and \(1 \leq j \leq m\), with the value of V[i, j] > 0.
+Assume the rows are labeled from 1 to n, top down, and columns are labeled 
+1 to m, left to right. Now, we wish to find a path from cell A[1, 1] to
+A[n, m] that only moves one cell right or one celldown each step such that
+every coin on the path will be picked and the total value of these coins
+can be maximized. Please design a dynamic programming algorithm to solve
+this problem. You need to show the inductive formula and pseudocode.
+What is the complexity of your algorithm?
+
 
 \begin{algorithm}[H]
     \caption{
@@ -292,49 +301,74 @@ of the algorithm is as follows:
 \end{flalign*}
 
 \pagebreak
+\encircle{4} Consider the problem of welding a sequence of n steel tubes, \(a_1, a_2, a_3, ..., a_n\),
+into a single tube. You may choose any two adjacent pieces to weld at each step. Suppose that tube
+\(a_i\) has a weight W[i], \(1 \leq i \leq n\). Moreover, we assume that the cost for welding two
+pieces is proportional to the heavier weight of the two pieces (you may assume a dollar per unit
+weight).
+    \begin{enumerate}[label=\Alph*]
+        \item Design a dynamic programming algorithm to find the order to weld the n pieces
+        such that the total cost is minized. You need only to show the formula and initial
+        conditions from which an algorithm can be developed.
+        \item Apply your algorithm to the following sequence.
+        \[
+            W[1]=6, W[2]=2, W[3]=7, W[4]=5, W[5]=8
+        \]
+    \end{enumerate}
 
-% \encircle{4} TODO: Problem Statement
+\textbf{4.A}
 
-% \textbf{4.A}
+\begin{algorithm}[H]
+    \caption{
+        A dynamic programming implementation used to
+        find the welding order.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MinimizeWeldCost}{W, n}            
+            \State $ M \gets P \gets \emptyset $
+            \State $ \Call{Initialize}{M, P} $ \Comment{P indicates weld points}
+            \\
+            \For{level from 2 to n}
+                \For{i from 1 to n - level + 1}
+                    \State $ j \gets i + level - 1 $                 
+                    \State $ M[i, j] \gets \infty $
+                    \For{k from i to j - 1}                        
+                        \State $ q \gets M[i, k] + M[k + 1, j] + \Call{CostToWeld}{W, i, k, j} $
+                        \If{q < M[i, j]}
+                            \State $ M[i, j] \gets q $
+                            \State $ P[i, j] \gets k $ 
+                        \EndIf
+                    \EndFor                    
+                \EndFor
+            \EndFor
+            \\
+            \State $ \Return \text{ M and P} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
 
-% \begin{algorithm}[H]
-%     \caption{
-%         A dynamic programming implementation used to
-%         find the welding order.
-%     }
-%     \label{alg:algorithm-label}
-%     \begin{algorithmic}[1]
-%         \Function{MinimizeWeldCost}{W, n}            
-%             \State $ M \gets P \gets \emptyset $
-%             \Call{Initialize}{M, P}
-%             \\
-%             \For{level from 2 to n}
-%                 \For{i from 1 to n - level + 1}
-%                     \State $ j \gets i + level - 1 $                 
-%                     \State $ M[i, j] \gets \infty $
-%                     \For{k from i to j - 1}
-%                         \State $ smallerRod \gets (i, k) $
-%                         \If{\Call{WeldingCost{smallerRod}} > \Call{WeldingCost}{k + 1, j}}
-%                             \State $ smallerRod \gets (k + 1, j) $
-%                         \EndIf
-%                         \State $ q \gets \Call{Cost}{i, k} + \Call{Cost}{k + 1, j} + \Call{WeldingCost}{smallerRod, i, j) $
-%                         \If{q < M[i, j]}
-%                             \State $ M[i, j] \gets q $
-%                             \State $ P[i, j] \gets k $
-%                         \EndIf
-%                     \EndFor                    
-%                 \EndFor
-%             \EndFor
-%             \\
-%             \State $ \Return \text{ M and P} $
-%         \EndFunction
-%     \end{algorithmic}
-% \end{algorithm}
+TODO: Part 4.A needs inductive formula and initial conditions.
+
+\begin{algorithm}[H]
+    \caption{
+        Function to determine cost of a particular weld.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{CostToWeld}{W, i, k, j}            
+            \State $ cost \gets \Call{Cost}{W, i, k} $
+            \If{ cost > \Call{Cost}{W, k + 1, j}}
+                \State $ cost \gets \Call{Cost}{W, k + 1, j} $
+            \EndIf
+            \\
+            \State $ \Return \textit{ cost} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
 
 
-% \textbf{4.B}
-
-\encircle{5} TODO: Problem Statement
+\textbf{4.B} TODO
 
 
 \end{document}

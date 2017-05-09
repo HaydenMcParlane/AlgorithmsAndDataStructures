@@ -14,21 +14,29 @@
 
 \begin{document}
 
-% \begin{titlepage}
+\begin{titlepage}
 
-%     \begin{center}
-%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
-%         \large\textbf{Homework <num-here>} \\        
-%         \large\textit{Author: Hayden McParlane}
-%     \end{center}
+    \begin{center}
+        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+        \large\textbf{Homework 2} \\        
+        \large\textit{Author: Hayden McParlane}
+    \end{center}
 
-% \end{titlepage}
+\end{titlepage}
 
-\encircle{1} TODO: Problem Statement
+\encircle{1} There are n houses located on a west-to-east street. H[i] (meters), \(1 \leq i \leq n\),
+is the distance from the west end of the street to the ith house. You may assume that H[1] < H[2] <
+H[3] < ... < H[n]. There is no post office on the street. We plan to build several post offices on the
+street such that any house can reach a post office within 100 meters. Please design an \(\mathcal{O}(n)\)
+algorithm to compute the locations for the post offices, P[j] (meters), \(1 \leq j \leq m\), where P[j]
+is the distance from the west end of the street to the jth post office. Make sure that the number of 
+post offices, m, is minimized.
 
 \begin{algorithm}[H]
     \caption{
-        TODO        
+        Algorithm used to place the minimal number of post offices
+        such that each house in H will have a post office at most
+        100 meters away.
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
@@ -49,11 +57,21 @@
     \end{algorithmic}
 \end{algorithm}
 
-\encircle{2} TODO: Problem Statement
+\pagebreak
+\encircle{2} Suppose we drive a pickup truck from city A to city B. Along the highway we will
+pass through n apple markets labeled with 1, 2, 3, ..., n, where you can buy or sell apples.
+City A and city B also have an apple market each. From a customer point of view, the buying
+price B[i] and selling price S[i] (dollar per pound) at market i are known. Now, we will stop
+at one of the stationsto buy apples and then stop and another station to sell apples. Please
+design an \(\mathcal{O}(n)\) greedy algorithm to find market i to buy apples and market j\(\geq\)
+i to sell apples such that the profit will be maximized. We assume that it would be too costly
+and forbidden to drive backward. You need to do exactly one trade even if the profit is negative.
 
 \begin{algorithm}[H]
     \caption{
-        TODO        
+        Greedy algorithm used maximize profit for the apple buy/sell
+        problem above. Note that in certain instances this algorithm
+        may be suboptimal, a quality common to greedy algorithms.
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
@@ -77,11 +95,20 @@
     \end{algorithmic}
 \end{algorithm}
 
-\encircle{3} TODO: Problem Statement
+\pagebreak
+\encircle{3} Re-consider the following problem in quiz 1: Given a sequence of n real numbers
+stored in an array, A[1], A[2], A[3], ..., A[n], we wish to find two numbers A[i] and A[j],
+where i < j, such that A[i] \(\leq\) A[j] and their sum is the largest. If no such two numbers
+exist, report -\(\infty\). This time, please design an \(\mathcal{O}(n)\) greedy algorithm
+to solve this problem.
 
 \begin{algorithm}
     \caption{
-        TODO        
+        Greedy algorithm solving the problem above. It's important to note 
+        that a quality of greedy algorithms is possible suboptimal performance.
+        This solution may perform suboptimally whereas the divide-and-conquer 
+        algorithm presented previously would not. However, this algorithm performs
+        better. It is a trade-off. 
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}

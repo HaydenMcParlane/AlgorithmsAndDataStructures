@@ -16,19 +16,23 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \begin{document} 
 
-% \begin{titlepage}
+\begin{titlepage}
 
-%     \begin{center}
-%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
-%         \large\textbf{Homework <num-here>} \\        
-%         \large\textit{Author: Hayden McParlane}
-%     \end{center}
+    \begin{center}
+        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+        \large\textbf{Homework 1} \\        
+        \large\textit{Author: Hayden McParlane}
+    \end{center}
 
-% \end{titlepage}
+\end{titlepage}
 
-\encircle{3} TODO: Problem Statement
+\encircle{3} Given a sequence of n real numbers stored in an array, A[1], A[2], A[3], ..., A[n],
+we wish to find two numbers A[i] and A[j], where i < j, such that A[i] \(\leq\) A[j] and their
+sum is the largest. Please design a divide-and-conquer algorithm to solve the above problem.
+Please analyze the complexity of your algorithm. The complexity of your algorithm must be
+\(\mathcal{O}(n \cdot lg n)\) or better.
 
-    \section{Pseudocode Algorithm}
+    \textbf{Pseudocode}
 
     \begin{algorithm}[H]             
         \caption{Find max two such that: \[i < j\] and \[A[i] \leq A[j]\]}
@@ -75,7 +79,7 @@
         \end{algorithmic}        
     \end{algorithm}    
         
-    \section{Complexity Analysis}
+    \textbf{Complexity Analysis}
 
     We can think of this algorithm in terms of three parts: left call, right call
     and a function that finds the answer which crosses over the from the left 
@@ -122,11 +126,20 @@
     \end{flalign*}    
 
 \pagebreak
-\encircle{4} TODO: Problem Statement
+\encircle{4} In a given sequence of n numbers in an array, A[1], A[2], A[3], ..., A[n],
+a number may occur multiple times. A number is called the dominating number if it occurs 
+strictly more than n/2 times. A sequence may have no dominating number. You may compare
+two numbers, A[i] and A[j], \(1 \leq i < j \leq n\), to see if A[i] equals A[j]. However,
+we assume this comparison does not tell which one is smaller in case they are not identical.
+Please use this kind of comparison among the numbers in array A and counting to determine
+if array A has a dominating number. You can expect to know which number is smaller or 
+larger if the two numbers in comparison are not both from array A. Your algorithm must use
+divide-and-conquer and have \(\mathcal{O}(n \cdot lg n)\) complexity.
 
 \begin{algorithm}[H]
     \caption{
-        TODO        
+        Algorithm to solve dominating number problem using the divide-and-conquer
+        approach.
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
@@ -151,11 +164,16 @@
 \end{algorithm}
 
 \pagebreak
-\encircle{5} TODO: Problem Statement
+\encircle{5} Given a sequence of n real numbers, A[1], A[2], A[3], ..., A[n], we wish
+to find a subsequence from A[i] to A[j], \(1 \leq i \leq j \leq n\) such that the sum
+of all the numbers in this subsequence is maximized. Please design a \(\mathcal{O}(n \cdot lg n\)
+divide-and-conquer algorithm to solve this problem. Note that some numbers may be negative
+and the value m may be negative. You need to present good pseudocode.
 
 \begin{algorithm}[H]
     \caption{
-        TODO;
+        Divide-and-conquer algorithm that locates the subsequence
+        of A having the greatest sum.
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
@@ -175,7 +193,9 @@
 
 \begin{algorithm}[H]
     \caption{
-        TODO;
+        Function that calculates the maximum subsequence that crosses
+        the left and right barrier in the recursive function above
+        providing total coverage of the algorithm above.
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
