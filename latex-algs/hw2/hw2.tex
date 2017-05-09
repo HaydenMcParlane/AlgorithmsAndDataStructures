@@ -86,20 +86,21 @@
     \label{alg:algorithm-label}
     \begin{algorithmic}
         \Function{LargestSum}{A, n}
-            \State $ max \gets -\infty $ \Comment{j represents maximum}
-            \State $ subMax \gets -\infty $ \Comment{i represents sub-maximum}           
+            \State $ max \gets -\infty $ 
+            \State $ submax \gets -\infty $ 
+            \\            
             \For{k from 1 to n}
-                \If{A[max] \(\leq\) A[k]}
+                \If{max \(\leq\) A[k]}
                     \State $ subMax \gets max $
-                    \State $ max \gets k $
-                \Else
-                    \If{A[subMax] < A[k]}
-                        \State $ subMax \gets k $
-                    \EndIf
+                    \State $ max \gets A[k] $                                    
                 \EndIf
-            \EndFor
+            \EndFor            
             \\
-            \State $ \Return \text{ A[max] and A[subMax]} $
+            \If{max equals -\(\infty\) or submax equals -\(\infty\)}
+                \State $ \Return \text{ -}\infty $
+            \Else
+                \State $ \Return \text{ \textit{max} and \textit{submax}} $
+            \EndIf                            
         \EndFunction
     \end{algorithmic}
 \end{algorithm}
