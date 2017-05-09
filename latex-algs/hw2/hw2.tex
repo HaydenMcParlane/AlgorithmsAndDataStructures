@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{tikz}
+
+\newcommand\encircle[1]{
+    \tikz[baseline=(X.base)]
+        \node (X) [draw, shape=circle, inner sep=0]{\strut #1};
+}
+
+\begin{document}
+
+% \begin{titlepage}
+
+%     \begin{center}
+%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+%         \large\textbf{Homework <num-here>} \\        
+%         \large\textit{Author: Hayden McParlane}
+%     \end{center}
+
+% \end{titlepage}
+
+\encircle{1} TODO: Problem Statement
+
+\begin{algorithm}[H]
+    \caption{
+        TODO        
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{PlacePostOffices}{H, n}
+            \State $ P \gets \emptyset $
+            \\
+            \State $ \Call{Append}{P, H[1] + 100} $
+            \State $ j \gets 1 $
+            \For{i from 2 to n}
+                \If{|H[i] - P[j]| > 100}
+                    \State $ \Call{Append}{P, H[i] + 100} $
+                    \State $ j \gets j + 1 $
+                \EndIf
+            \EndFor
+            \\
+            \State $ \Return \text{ P} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\encircle{2} TODO: Problem Statement
+
+\begin{algorithm}[H]
+    \caption{
+        TODO        
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{MaxProfit}{B, S, n}
+            \State $ buy \gets 0 $
+            \State $ sell \gets 0 $            
+            \For{i from 1 to n + 1}
+                \If{B[buy] > B[i]}
+                    \State $ buy \gets i $                    
+                    \State $ sell \gets i $
+                \Else
+                    \If{S[sell] < S[i]}
+                        \State $ sell \gets i $
+                    \EndIf                     
+                \EndIf                                
+            \EndFor            
+            \\
+            \State $ \Return \text{ (buy, sell)} $
+
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\encircle{3} TODO: Problem Statement
+
+\begin{algorithm}
+    \caption{
+        TODO        
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}
+        \Function{LargestSum}{A, n}
+            \State $ max \gets -\infty $ \Comment{j represents maximum}
+            \State $ subMax \gets -\infty $ \Comment{i represents sub-maximum}           
+            \For{k from 1 to n}
+                \If{A[max] \(\leq\) A[k]}
+                    \State $ subMax \gets max $
+                    \State $ max \gets k $
+                \Else
+                    \If{A[subMax] < A[k]}
+                        \State $ subMax \gets k $
+                    \EndIf
+                \EndIf
+            \EndFor
+            \\
+            \State $ \Return \text{ A[max] and A[subMax]} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\end{document}
