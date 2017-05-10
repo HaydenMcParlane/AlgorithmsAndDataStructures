@@ -5,6 +5,10 @@
 \usepackage{mathtools}
 \usepackage[T1]{fontenc}
 \usepackage{amsmath, amsfonts}
+\usepackage{enumitem}
+\usepackage{blkarray}
+\usepackage{tabu}
+% \usepackage{tabularx}
 \usepackage{tikz}
 
 \newcommand\encircle[1]{
@@ -122,7 +126,84 @@ constant while the elements of C vary. When the call to A is done and
 results in no in the while-loop, we can assume that the previously eliminated
 company was vital and needs to be in the solution.
 
-% \encircle{2} <problem statement>
+\pagebreak
+\encircle{2} Consider the following activity selection problem. Suppose we 
+have two lecture halls which are available from time t = 0. There are n activities, 
+\(a_1, a_2, a_3, ..., a_n\), that apply for using either one of these two
+lecture halls. Each activity \(a_i\), \((1 \leq i \leq n)\) has flexible
+starting time but must start before or at \(s_i\) \((\geq 0)\) and requests to
+use the hall for \(t_i\) hours. We wish to select the largest set of scheduled
+activities such that their requests can be satisfied with no time conflict.
+That is, they can be scheduled into one of these two lecture halls such that, 
+at any time, at most one activity takes place in each hall.
+\begin{enumerate}[label=\Alph*]
+    \item Re-define this problem as a decision problem.
+    \item Prove that this decision problem is NP-hard.
+\end{enumerate}
 
+\textbf{2.A} Re-defining this problem as a decision problem can be done as
+follows.
 
+% Consider the following activity selection problem. Suppose we 
+% have two lecture halls which are available from time t = 0. There are n activities, 
+% \(a_1, a_2, a_3, ..., a_n\), that apply for using either one of these two
+% lecture halls. Each activity \(a_i\), \((1 \leq i \leq n)\) has flexible
+% starting time but must start before or at \(s_i\) \((\geq 0)\) and requests to
+% use the hall for \(t_i\) hours. \textbf{We wish to select the largest set of scheduled
+% activities such that their requests can be satisfied with no time conflict.}
+% That is, they can be scheduled into one of these two lecture halls such that, 
+% at any time, at most one activity takes place in each hall.
+
+% Here, the sentence "We wish to select the largest set of scheduled activities
+% such that their requests can be satisfied with no time confict" is key in 
+% the restatement of this problem. Because determination of the maximum can be
+% done by testing increasing the size of a theoretical activity set gradually
+% and checking if that set is doable, we can take the optimization statement
+% above and re-write it as "Can we find a set of k activities such that all k
+% activities can be scheduled in the two lecture halls without time conflict?".
+
+% \textbf{Therefore, the total problem statement becomes: }
+
+Consider the following activity selection problem. Suppose we 
+have two lecture halls which are available from time t = 0. There are n activities, 
+\(a_1, a_2, a_3, ..., a_n\), that apply for using either one of these two
+lecture halls. Each activity \(a_i\), \((1 \leq i \leq n)\) has flexible
+starting time but must start before or at \(s_i\) \((\geq 0)\) and requests to
+use the hall for \(t_i\) hours. \textbf{Can we find a set of k activities such that all k
+activities can be scheduled in the two lecture halls without time conflict?}
+
+\text{}\\
+\textbf{2.B} A fairly intuitive problem to map to our new problem above in this
+proof is the set partion problem.
+
+The set partition problem is defined as follows. Given a set of numbers,
+\(S = \{a_1, a_2, a_3, ..., a_n\}\), can we partition S into two sets, A and B,
+such that the following is true:
+\[
+    \sum_{i \in A}{v_i} = \sum_{i \in B}{v_i}
+\]
+It's important to realize that in order for the above to be true, the total sum
+of every element in the set \(S\) must be \(M\) meaning that each partition must
+sum to \(M/2\). That is,
+\begin{flalign*}
+    \sum_{i \in S}{v_i} &= M &\\
+\end{flalign*}
+
+We further assume that all elements of the set S have a value less than M/2.
+If this weren't the case partitioning the set wouldn't be possible which is
+an extraneous case not in need of consideration here. With this in
+mind, we can map the set partition problem to that above in the following manner:
+\begin{enumerate}
+    \item Take each set value, \(v_i\), and map it to a corresponding duration
+    \(t_i\).
+    \item Take each set value, \(v_i\), and map it to a latest starting time
+    \(s_i\) using the following equation:
+    \begin{flalign*}
+        s_i &= (M/2) - t_i &\\
+    \end{flalign*}
+    \item Add two new values, \(a_{n+1}\) and \(a_{n+2}\) such that 
+    \begin{flalign*}
+        a_{n+1} &= 
+    \end{flalign*}
+\end{enumerate}
 \end{document}
