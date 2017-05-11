@@ -99,33 +99,33 @@ activities have been sorted such that \(S[1] \leq S[2] \leq ... \leq S[n]\).
     }
     \label{alg:algorithm-label}
     \begin{algorithmic}[1]
-        \Function{MaxActivities}{S[1..n], F[1..n]}
+        \Function{MaxDuration}{S[1..n], F[1..n]}
             \State $ M \gets P \gets \emptyset $        
             \State $ \Call{Initialize}{M, P} $            
             \\
-            \State $ M[1] \gets 1 $
-            \State $ P[1] \gets 0 $
+            \State $ M[1] \gets F[1] - S[1] $
+            \State $ P[1] \gets NIL $
             \For{i from 2 to n}   \Comment{Locate max for \(m_i\)}                
                 \State $ max \gets 0 $
-                \State $ maxIdx \gets 0 $                
+                \State $ previous \gets NIL $                
                 \For{j from 1 to i - 1}
                     \If{max < M[j] and F[j] \(\leq\) S[i]}
                         \State $ max \gets M[j] $
-                        \State $ maxIdx \gets j $
+                        \State $ previous \gets j $
                     \EndIf
                 \EndFor               
-                \State $ M[i] \gets max + 1$ 
-                \State $ P[i] \gets maxIdx $
+                \State $ M[i] \gets max + (F[i] - S[i])$ 
+                \State $ P[i] \gets previous $
             \EndFor
             \\
             \State $ max \gets 1 $ \Comment{Find global maximum}                        
             \For{i from 2 to n}      
                 \If{M[max] < M[i]}
-                    \State $ max \gets i $                    
+                    \State $ max \gets i $                
                 \EndIf
             \EndFor
             \\
-            \State $ \Return \text{ (max, P)}$
+            \State $ \Return \text{ max and P}$
             
         \EndFunction
     \end{algorithmic}
@@ -133,13 +133,13 @@ activities have been sorted such that \(S[1] \leq S[2] \leq ... \leq S[n]\).
 
 With this algorithm in mind, the answer is as follows:
 \begin{flalign*}
-    \textbf{ Inductive Formula: } \{ m(i) &= \max_{1 \leq j \leq i}(m_j) + 1 \mid F[j] < S[i] \} &\\
-    \textbf{Initial Conditions: } m(1) &= 1 &\\    
+    \textbf{ Inductive Formula: } \{ m(i) &= \max_{1 \leq j \leq i}(m_j) + (F[i] - S[i]) \mid F[j] < S[i] \} &\\
+    \textbf{Initial Conditions: } m(1) &= F[1] - S[1] &\\    
 \end{flalign*}
 
 The \textbf{subproblem} can be thought of as follows. Each activity, \(i\),
 will be added to a chain of activities resulting in the maximum set that
-includes activity \(i\). Activity \(i\) is always included in its maximum.
+includes activity \(i\). Activity \(i\) always has its duration included in its maximum.
 Its maximum, \(m_i\), must also be based off of previous activities which
 are compatible.
 \\
