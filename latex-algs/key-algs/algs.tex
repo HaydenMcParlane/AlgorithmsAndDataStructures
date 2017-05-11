@@ -1,0 +1,222 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{tikz}
+
+\newcommand\encircle[1]{
+    \tikz[baseline=(X.base)]
+        \node (X) [draw, shape=circle, inner sep=0]{\strut #1};
+}
+
+\begin{document}
+
+% \begin{algorithm}[H]
+%     \caption{
+%         TODO:
+%     }
+%     \label{alg:algorithm-label}
+%     \begin{algorithmic}[1]
+%         \Function{<name>}{<params>}
+%         \EndFunction
+%     \end{algorithmic}
+% \end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{
+        Breadth-first Search with Coloring for clarity. This implementation
+        uses an adjacency list for the graph data structure.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{BFS}{G(V, E), sourceNode} \Comment{G has vertices V, edges E}
+            \State $ Tree \gets \emptyset $            
+            \State $ Dist \gets \emptyset $
+            \State $ Color \gets \emptyset $
+            \State $ Parent \gets \emptyset $            
+            \State $ \Call{Init}{Tree, Dist, Parent, Color} $
+            \\
+            \State $ Q \gets \emptyset $
+            \State $ Color[sourceNode] \gets Grey $
+            \State $ Parent[sourceNode] \gets NIL $
+            \State $ Dist[sourceNode] \gets 0 $
+            \\
+            \State $ \Call{Enq}{Q, sourceNode} $
+            \While{ \Call{NotEmpty}{Q} }
+                \State $ u \gets \Call{Deq}{Q} $
+                \For{v in \Call{Adj}{u}}
+                    \If{Color[v] equals White}
+                        \State $ \Call{Visit}{\text{v}} $
+                        \State $ \text{Color[v]} \gets Grey $
+                        \State $ \text{Parent[v]} \gets u $
+                        \State $ \text{Dist[v]} \gets Dist[u] + 1 $
+                        \State $ Tree \gets Tree \bigcup \{(u, \text{v})\} $
+                        \State $ \Call{Enq}{Q, \text{v}} $
+                    \Else
+                        \State $ \text{<Do processing logic here if desired>} $
+                    \EndIf                                    
+                \EndFor                
+                \State $ \text{Color[}u\text{]} \gets Black $                
+            \EndWhile
+            \\
+            \State $ \Return \text{ Tree} $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\pagebreak
+\begin{algorithm}[H]
+    \caption{
+        Depth-first Search using color for clarity.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{DFS}{G(V, E), sourceNode}
+            \State $ Start \gets \emptyset $
+            \State $ Finish \gets \emptyset $
+            \State $ Parent \gets \emptyset $
+            \State $ Color \gets \emptyset $                        
+            \State $ \Call{DfsInit}{G(V, E), Start, Finish, Parent, Color } $
+            \\                 
+            \State $ Start[sourceNode] \gets 0 $
+            \State $ Parent[sourceNode] \gets Nil $                                    
+            \State $ time \gets 0 $            
+            \For{ vertex in V}
+                \If{Color[vertex] equals White}
+                    \State $ \Call{DfsVisit}{vertex, time, Start, Finish, Parent, Color} $
+                \EndIf
+            \EndFor            
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{
+        The visit function associated with DFS.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{DfsVisit}{u, time, Start, Finish, Parent, Color}
+            \State $ Color[u] \gets Grey $
+            \State $ time \gets time + 1 $
+            \State $ Start[u] \gets time $
+            \For{v in \Call{Adj}{u}}
+                \If{Color[v] equals White}
+                    \State $ Parent[v] \gets u $
+                    \State $ \Call{DfsVisit}{v, time, Start, Finish, Parent, Color} $
+                \EndIf
+            \EndFor
+            \State $ Color[u] \gets Black $
+            \State $ Finish[u] \gets time \gets time + 1 $
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{
+        DFS Initialization function.
+    }
+    \label{alg:algorithm-label}
+    \begin{algorithmic}[1]
+        \Function{DfsInit}{G(V, E), Start, Finish, Parent, Color}
+            \For{vertex in V}
+                \State $ Color[vertex] \gets White $
+                \State $ Start[vertex] \gets -1 $
+                \State $ Finish[vertex] \gets -1 $
+                \State $ Parent[vertex] \gets Nil $
+            \EndFor
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+% TODO: If given source node, DFS in notes ignores source
+% and progresses about vertices iteratively. How to 
+% incorporate a given source node?
+% \pagebreak
+% \begin{algorithm}[H]
+%     \caption{
+%         DFS Algorithm utilizing stack.
+%     }
+%     \label{alg:algorithm-label}
+%     \begin{algorithmic}[1]
+%         \Function{DfsStack}{G(V, E), sourceNode}
+%             \State $ \Call{DfsInit}{G(V, E)} $
+%             \\
+%             \State $ S \gets \emptyset $            
+%             \While{\Call{NotEmpty}{S}}
+%             \State $ vertex \gets \Call{Top}{S} $
+%             \
+%             \EndWhile
+%         \EndFunction
+%     \end{algorithmic}
+% \end{algorithm}
+
+\pagebreak
+\begin{algorithm}[H]
+\caption{
+Kruskal's Algorithm for locating the Minimum Spanning Tree.
+}
+\label{alg:algorithm-label}
+\begin{algorithmic}[1]
+    \Function{GetMST}{G(V, E)} \Comment{Kruskal's Algorithm}
+        \State $ Label \gets \emptyset $
+        \State $ \Call{Labelize}{Label, V} $
+        \State $ A \gets \emptyset $
+        \State $ \Call{Sort}{E, order=nondecreasing} $
+        \For{ (u, v) in E }
+            \If{not \Call{IntroducesCycle}{A, u, v} }
+                \State $ A \gets A \bigcup \{edge\} $
+                \State $ \Call{MergeLabels}{u, v} $ \Comment{Must merge trees, not just ind. vertices}
+            \EndIf
+        \EndFor
+        \State $ \Return \text{ G(V, A)} $
+    \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\caption{
+    Function that determines if a given edge added
+    to a set of edges will produce a cycle.
+}
+\label{alg:algorithm-label}
+\begin{algorithmic}[1]
+    \Function{IntroducesCycle}{Label, u, v}        
+        \If{Label[u] equals Label[v]}
+            \State $ \Return \text{ True} $
+        \Else
+            \State $ \Return \text{ False} $
+        \EndIf
+    \EndFunction
+\end{algorithmic}
+\end{algorithm}
+
+% \begin{algorithm}[H]
+% \caption{
+%     Merge labels operation. Assists in detection of cycles
+%     with Dijkstra's Algorithm.
+% }
+% \label{alg:algorithm-label}
+% \begin{algorithmic}[1]
+%     \Function{MergeLabels}{Label, u, v}
+%         \State $ Label[v] \gets [u] $
+%     \EndFunction
+% \end{algorithmic}
+% \end{algorithm}
+
+\pagebreak
+\begin{algorithm}[H]
+\caption{
+Prim's Algorithm for finding the Minimum Spanning Tree.
+}
+\label{alg:algorithm-label}
+\begin{algorithmic}[1]
+    \Function{FindMST}{G(V, E)}
+        
+    \EndFunction
+\end{algorithmic}
+\end{algorithm}
+\end{document}
