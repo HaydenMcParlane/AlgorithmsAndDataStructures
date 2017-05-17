@@ -16,15 +16,15 @@
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 \begin{document} 
 
-\begin{titlepage}
+% \begin{titlepage}
 
-    \begin{center}
-        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
-        \large\textbf{Homework 1} \\        
-        \large\textit{Author: Hayden McParlane}
-    \end{center}
+%     \begin{center}
+%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+%         \large\textbf{Homework 1} \\        
+%         \large\textit{Author: Hayden McParlane}
+%     \end{center}
 
-\end{titlepage}
+% \end{titlepage}
 
 \encircle{3} Given a sequence of n real numbers stored in an array, A[1], A[2], A[3], ..., A[n],
 we wish to find two numbers A[i] and A[j], where i < j, such that A[i] \(\leq\) A[j] and their
@@ -38,15 +38,16 @@ Please analyze the complexity of your algorithm. The complexity of your algorith
         \caption{Find max two such that: \[i < j\] and \[A[i] \leq A[j]\]}
         \label{alg:algorithm-label}
         \begin{algorithmic}[1]
-            \Function{FindMax}{A, p, r}
+            \Function{FindMaxSum}{A, p, r}
                 \If{ p equals r}
-                    \Return $ (-\infty, -\infty) $ 
+                    \Return $ -\infty $ 
                 \Else
                     \State $ mid \gets \floor{(p + r)/2} $
-                    \State $ leftSolution \gets \Call{FindMax}{A, p, mid} $
-                    \State $ rightSolution \gets \Call{FindMax}{A, mid + 1, r} $
-                    \State $ crossingSolution \gets \Call{FindCrossingMax}{A, p, mid, r} $
-                    \State $ \Return $ \Call{Max}{leftSolution, crossingSolution, rightSolution} $ $
+                    \State $ i_1, j_1 \gets \Call{FindMaxSum}{A, p, mid} $
+                    \State $ i_2, j_2 \gets \Call{FindMaxSum}{A, mid + 1, r} $
+                    \State $ i_3, j_3 \gets \Call{FindCrossingMax}{A, p, mid, r} $                    
+                    \State $ i_{max}, j_{max} \gets \{ i, j \mid \max_{1 \leq k \leq 3}(A[i_k] + A[j_k])\} $
+                    \State $ \Return \textit{ \(i_{max}, j_{max}\) } $
                 \EndIf
             \EndFunction
         \end{algorithmic}        
@@ -57,174 +58,176 @@ Please analyze the complexity of your algorithm. The complexity of your algorith
         \label{alg:algorithm-label}
         \begin{algorithmic}[1]
             \Function{FindCrossingMax}{A, p, mid, r}                
-                \State $ i \gets \text{mid} $
-                \State $ j \gets \text{mid} + 1 $            
-                \State $ max \gets  A[i] + A[j]$    
-                \For{k from mid down to p}
-                    \If{ max < A[k] +  A[j]}
-                        \State $ i \gets k $
-                        \State $ max \gets A[k] + A[j] $
-                    \EndIf
-                \EndFor
-
+                \State $ i \gets -\infty $
+                \State $ j \gets -\infty $                            
+                \\
                 \For{k from mid + 1 up to r}
-                    \If{ max < A[k] + A[i] }
-                        \State $ j \gets k $
-                        \State $ max \gets A[k] + A[i] $
+                    \If{ A[j] < A[k] }
+                        \State $ j \gets k $                        
                     \EndIf
                 \EndFor
-
-                \State $ \Return $ (\textit{i, j})
+                \\
+                \For{k from mid down to p}
+                    \If{ A[i] \(\leq\) A[j] and A[i] < A[k]}
+                        \State $ i \gets k $                        
+                    \EndIf
+                \EndFor
+                \\
+                \If{ i equals -\(\infty\) or j equals -\(\infty\)}
+                    \State $ \Return \text{ -}\infty $
+                \Else                
+                    \State $ \Return $ \text{ i and j}
+                \EndIf
             \EndFunction
         \end{algorithmic}        
     \end{algorithm}    
         
-    \textbf{Complexity Analysis}
+%     \textbf{Complexity Analysis}
 
-    We can think of this algorithm in terms of three parts: left call, right call
-    and a function that finds the answer which crosses over the from the left 
-    to the right. With that in mind, the time complexity of this algorithm can
-    be modeled using the following equation:
+%     We can think of this algorithm in terms of three parts: left call, right call
+%     and a function that finds the answer which crosses over the from the left 
+%     to the right. With that in mind, the time complexity of this algorithm can
+%     be modeled using the following equation:
 
-    \begin{flalign*}
-        \Call{T}{n} &= \Call{T}{\floor{n/2}} + \Call{T}{\ceil{n/2}} + \Call{f}{n} + \mathcal{O}(1)
-    \end{flalign*}
+%     \begin{flalign*}
+%         \Call{T}{n} &= \Call{T}{\floor{n/2}} + \Call{T}{\ceil{n/2}} + \Call{f}{n} + \mathcal{O}(1)
+%     \end{flalign*}
 
-    Recognizing that the time complexity is monotonically increasing and
-    is bounded by the functions and not the constant \(\mathcal{O}(1)\), we can
-    eliminate the floor and ceiling functions and simplify the constant time 
-    element as follows:
+%     Recognizing that the time complexity is monotonically increasing and
+%     is bounded by the functions and not the constant \(\mathcal{O}(1)\), we can
+%     eliminate the floor and ceiling functions and simplify the constant time 
+%     element as follows:
 
-    \begin{flalign*}
-        \Call{T}{n} &= \Call{T}{n/2} + \Call{T}{n/2} + n + 1 &\\
-                    &= 2 \cdot \Call{T}{n/2} + n +  1
-    \end{flalign*}
+%     \begin{flalign*}
+%         \Call{T}{n} &= \Call{T}{n/2} + \Call{T}{n/2} + n + 1 &\\
+%                     &= 2 \cdot \Call{T}{n/2} + n +  1
+%     \end{flalign*}
 
-    Using the master method it is evident that
+%     Using the master method it is evident that
     
-    \begin{flalign*}
-        a &= 2 &\\
-        b &= 2 &\\    
-        \Call{f}{n} &= n
-    \end{flalign*}
+%     \begin{flalign*}
+%         a &= 2 &\\
+%         b &= 2 &\\    
+%         \Call{f}{n} &= n
+%     \end{flalign*}
 
-    Therefore
+%     Therefore
 
-    \begin{flalign*}
-        \Call{f}{n} &= \theta(n^{log_b a}) &\\
-                    &= \theta(n^{log_2 2}) &\\
-                    &= \theta(n^1) &\\
-                    &= \theta(n)
-    \end{flalign*}
+%     \begin{flalign*}
+%         \Call{f}{n} &= \theta(n^{log_b a}) &\\
+%                     &= \theta(n^{log_2 2}) &\\
+%                     &= \theta(n^1) &\\
+%                     &= \theta(n)
+%     \end{flalign*}
 
-    Implying that we should use rule 2 of the master method. Using rule two,
-    we determine the following:
+%     Implying that we should use rule 2 of the master method. Using rule two,
+%     we determine the following:
 
-    \begin{flalign*}
-        \Call{T}{n} &= \theta(n^{log_b a} \cdot log_2 n) &\\
-                    &= \theta(n \cdot log_2 n)
-    \end{flalign*}    
+%     \begin{flalign*}
+%         \Call{T}{n} &= \theta(n^{log_b a} \cdot log_2 n) &\\
+%                     &= \theta(n \cdot log_2 n)
+%     \end{flalign*}    
 
-\pagebreak
-\encircle{4} In a given sequence of n numbers in an array, A[1], A[2], A[3], ..., A[n],
-a number may occur multiple times. A number is called the dominating number if it occurs 
-strictly more than n/2 times. A sequence may have no dominating number. You may compare
-two numbers, A[i] and A[j], \(1 \leq i < j \leq n\), to see if A[i] equals A[j]. However,
-we assume this comparison does not tell which one is smaller in case they are not identical.
-Please use this kind of comparison among the numbers in array A and counting to determine
-if array A has a dominating number. You can expect to know which number is smaller or 
-larger if the two numbers in comparison are not both from array A. Your algorithm must use
-divide-and-conquer and have \(\mathcal{O}(n \cdot lg n)\) complexity.
+% \pagebreak
+% \encircle{4} In a given sequence of n numbers in an array, A[1], A[2], A[3], ..., A[n],
+% a number may occur multiple times. A number is called the dominating number if it occurs 
+% strictly more than n/2 times. A sequence may have no dominating number. You may compare
+% two numbers, A[i] and A[j], \(1 \leq i < j \leq n\), to see if A[i] equals A[j]. However,
+% we assume this comparison does not tell which one is smaller in case they are not identical.
+% Please use this kind of comparison among the numbers in array A and counting to determine
+% if array A has a dominating number. You can expect to know which number is smaller or 
+% larger if the two numbers in comparison are not both from array A. Your algorithm must use
+% divide-and-conquer and have \(\mathcal{O}(n \cdot lg n)\) complexity.
 
-\begin{algorithm}[H]
-    \caption{
-        Algorithm to solve dominating number problem using the divide-and-conquer
-        approach.
-    }
-    \label{alg:algorithm-label}
-    \begin{algorithmic}[1]
-        \Function{FindDominating}{A, p, r}        
-        \If{p equals r}
-            \State $ count \gets 1 $
-            \State $  $
-            \State $ \Return \text{ \textit{count} and \textit{}} $
-        \Else
-            \State $ threshold \gets \ceil{n/2} $
-            \State $ mid \gets \floor{(p + r) / 2} $
-            \State $ left \gets \Call{FindDominating}{A, p, mid} $
-            \State $ right \gets \Call{FindDominating}{A, mid + 1, r} $
-            \\
+% \begin{algorithm}[H]
+%     \caption{
+%         Algorithm to solve dominating number problem using the divide-and-conquer
+%         approach.
+%     }
+%     \label{alg:algorithm-label}
+%     \begin{algorithmic}[1]
+%         \Function{FindDominating}{A, p, r}        
+%         \If{p equals r}
+%             \State $ count \gets 1 $
+%             \State $  $
+%             \State $ \Return \text{ \textit{count} and \textit{}} $
+%         \Else
+%             \State $ threshold \gets \ceil{n/2} $
+%             \State $ mid \gets \floor{(p + r) / 2} $
+%             \State $ left \gets \Call{FindDominating}{A, p, mid} $
+%             \State $ right \gets \Call{FindDominating}{A, mid + 1, r} $
+%             \\
 
-            \\
-            \State $ \Return \text{ } $
-        \EndIf
+%             \\
+%             \State $ \Return \text{ } $
+%         \EndIf
 
-        \EndFunction
-    \end{algorithmic}
-\end{algorithm}
+%         \EndFunction
+%     \end{algorithmic}
+% \end{algorithm}
 
-\pagebreak
-\encircle{5} Given a sequence of n real numbers, A[1], A[2], A[3], ..., A[n], we wish
-to find a subsequence from A[i] to A[j], \(1 \leq i \leq j \leq n\) such that the sum
-of all the numbers in this subsequence is maximized. Please design a \(\mathcal{O}(n \cdot lg n\)
-divide-and-conquer algorithm to solve this problem. Note that some numbers may be negative
-and the value m may be negative. You need to present good pseudocode.
+% \pagebreak
+% \encircle{5} Given a sequence of n real numbers, A[1], A[2], A[3], ..., A[n], we wish
+% to find a subsequence from A[i] to A[j], \(1 \leq i \leq j \leq n\) such that the sum
+% of all the numbers in this subsequence is maximized. Please design a \(\mathcal{O}(n \cdot lg n\)
+% divide-and-conquer algorithm to solve this problem. Note that some numbers may be negative
+% and the value m may be negative. You need to present good pseudocode.
 
-\begin{algorithm}[H]
-    \caption{
-        Divide-and-conquer algorithm that locates the subsequence
-        of A having the greatest sum.
-    }
-    \label{alg:algorithm-label}
-    \begin{algorithmic}[1]
-        \Function{MaxSubsequence}{A, p, r}            
-            \If{p equals r}                
-                \State $ \Return \text{ p, r and A[p]} $
-            \Else
-                \State $ mid \gets \floor{(p + r)/2} $
-                \State $ left \gets \Call{MaxSubsequence}{A, p, mid} $
-                \State $ right \gets \Call{MaxSubsequence}{A, mid + 1, r} $
-                \State $ crossing \gets \Call{MaxCrossingSubsequence}{A, p, mid, r} $
-                \State $ \Return \text{ \(\max(left, crossing, right)\)} $
-            \EndIf            
-        \EndFunction
-    \end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}[H]
+%     \caption{
+%         Divide-and-conquer algorithm that locates the subsequence
+%         of A having the greatest sum.
+%     }
+%     \label{alg:algorithm-label}
+%     \begin{algorithmic}[1]
+%         \Function{MaxSubsequence}{A, p, r}            
+%             \If{p equals r}                
+%                 \State $ \Return \text{ p, r and A[p]} $
+%             \Else
+%                 \State $ mid \gets \floor{(p + r)/2} $
+%                 \State $ left \gets \Call{MaxSubsequence}{A, p, mid} $
+%                 \State $ right \gets \Call{MaxSubsequence}{A, mid + 1, r} $
+%                 \State $ crossing \gets \Call{MaxCrossingSubsequence}{A, p, mid, r} $
+%                 \State $ \Return \text{ \(\max(left, crossing, right)\)} $
+%             \EndIf            
+%         \EndFunction
+%     \end{algorithmic}
+% \end{algorithm}
 
-\begin{algorithm}[H]
-    \caption{
-        Function that calculates the maximum subsequence that crosses
-        the left and right barrier in the recursive function above
-        providing total coverage of the algorithm above.
-    }
-    \label{alg:algorithm-label}
-    \begin{algorithmic}[1]
-        \Function{MaxCrossingSubsequence}{A, p, mid, r}
-            \State $ i \gets mid $
-            \State $ j \gets mid + 1 $
-            \State $ max \gets A[i] + A[j] $
-            \State $ sequenceSum \gets max $
-            \\            
-            \For{k from mid - 1 to p}
-                \State $ sequenceSum \gets sequenceSum + A[k] $
-                \If{sequenceSum > max}
-                    \State $ max \gets sequenceSum $
-                    \State $ i \gets k $
-                \EndIf
-            \EndFor
-            \\
-            \For{k from mid + 2 to r}
-                \State $ sequenceSum \gets sequenceSum + A[k] $
-                \If{sequenceSum > max}
-                    \State $ max \gets sequenceSum $
-                    \State $ j \gets k $
-                \EndIf
-            \EndFor
-            \\
-            \State $ \Return \text{ i, j and max} $            
-        \EndFunction
-    \end{algorithmic}
-\end{algorithm}
+% \begin{algorithm}[H]
+%     \caption{
+%         Function that calculates the maximum subsequence that crosses
+%         the left and right barrier in the recursive function above
+%         providing total coverage of the algorithm above.
+%     }
+%     \label{alg:algorithm-label}
+%     \begin{algorithmic}[1]
+%         \Function{MaxCrossingSubsequence}{A, p, mid, r}
+%             \State $ i \gets mid $
+%             \State $ j \gets mid + 1 $
+%             \State $ max \gets A[i] + A[j] $
+%             \State $ sequenceSum \gets max $
+%             \\            
+%             \For{k from mid - 1 to p}
+%                 \State $ sequenceSum \gets sequenceSum + A[k] $
+%                 \If{sequenceSum > max}
+%                     \State $ max \gets sequenceSum $
+%                     \State $ i \gets k $
+%                 \EndIf
+%             \EndFor
+%             \\
+%             \For{k from mid + 2 to r}
+%                 \State $ sequenceSum \gets sequenceSum + A[k] $
+%                 \If{sequenceSum > max}
+%                     \State $ max \gets sequenceSum $
+%                     \State $ j \gets k $
+%                 \EndIf
+%             \EndFor
+%             \\
+%             \State $ \Return \text{ i, j and max} $            
+%         \EndFunction
+%     \end{algorithmic}
+% \end{algorithm}
 
 
 

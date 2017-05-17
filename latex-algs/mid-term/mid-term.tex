@@ -1,0 +1,193 @@
+\documentclass{article}
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\usepackage{algorithmicx}
+\usepackage{mathtools}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath, amsfonts}
+\usepackage{enumitem}
+\usepackage{blkarray}
+\usepackage{tabu}
+\usepackage{tikz}
+
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
+
+\newcommand\encircle[1]{
+    \tikz[baseline=(X.base)]
+        \node (X) [draw, shape=circle, inner sep=0]{\strut #1};
+}
+
+\begin{document}
+
+\begin{titlepage}
+
+    \begin{center}
+        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+        \large\textbf{Mid-term Make Up} \\        
+        \large\textit{Author: Hayden McParlane}
+    \end{center}
+
+\end{titlepage}
+
+\encircle{F.3} 
+Given a sequence of n (n > 2) real numbers in an array, A[1], A[2],
+A[3], ..., A[n], we wish to find two numbers A[i] and A[j], where i < j, such that
+A[i] \(\leq\) A[j] and their distance is the largest. That is, 
+\begin{flalign*}
+    j - i &= \max\{ v - u \mid 1 \leq u < v \leq n \text{ and } A[u] \leq A[v]\}
+\end{flalign*}
+If no such pair, report -\(\infty\). Please design an \(\mathcal{O}(n \cdot lg n)\) algorithm
+to solve this problem. You can use any method , including divide and conquer, greedy
+or dynamic programming.
+\begin{flalign*}
+    &\\
+\end{flalign*}
+\textbf{The following should be noted about the algorithm below (in addition to
+the statements in the problem):}
+\begin{enumerate}
+        \item Function \Call{SortAndTrackIndices}{A, I} returns array A sorted in
+        non-decreasing order \((a_1 \leq a_2 \leq a_3 \leq ... \leq a_n)\) as well
+        as an array, \(I\), which maps each \(a_i\) to its original position, \(I_i\).        
+\end{enumerate}
+
+\begin{algorithm}[H]
+\caption{
+    Greedy solution to the problem above. Make sure to take note of the assumptions
+    above.        
+}
+\label{alg:algorithm-label}
+\begin{algorithmic}[1]
+\Function{MaxDist}{A, n}
+    \State $ I \gets \emptyset $
+    \State $ A, I \gets \Call{SortAndTrackIndices}{A, I} $    
+    \State $ i \gets \infty $
+    \State $ j \gets -\infty $
+    \\
+    \For{k from 1 to n}
+        \If{\(j < I[k]\)}
+            \State $ j \gets I[k] $
+        \EndIf
+    \EndFor    
+    \\
+    \For{k from n to 1}
+        \If{\(I[k] < i \text{ and } I[k] \neq j \text{ and } A[k] \leq A[j]\)}
+            \State $ i \gets I[k] $
+        \EndIf
+    \EndFor
+    \\
+    \If{\(i\) equals \(\infty\)}
+        \State $ \Return \text{ -}\infty $
+    \Else
+        \State $ \Return \text{ i and j} $
+    \EndIf
+    \\    
+\EndFunction
+
+\end{algorithmic}
+\end{algorithm}
+
+\pagebreak
+\encircle{F.4} Consider the following activity selection problem. Suppose we have a lecture hall
+which is available from time t = 0. There are n activities, \(a_1, a_2, a_3, ..., a_n\), that apply
+for using the lecture hall. If the application of \(a_i (1 \leq i \leq n) \) is accepted, then it
+must start before or at \(s_i (\geq 0)\) and it must continuously use the hall for \(t_i\) time.
+Moreover, at any time, at most one activity is allowed to use the lecture hall. We wish to select 
+a set R of activities such that they can be arranged to use the lecture hall with no time conflict
+and the total time the lecture hall is used by these activities is maximized,
+\[
+    \sum_{a_i \in R}{t_i} \text{ is maximized.}
+\]
+
+\begin{enumerate}[label=\Alph*]
+    \item Re-define the problem as a decision problem.
+    \item Polynomially reduce the set partition problem to the decision problem
+    in the first part.
+\end{enumerate}
+
+\textbf{F.4.A} Because this optimization problem requests that we maximize the total time
+the lecture hall is used our restatement of the problem will focus on time usage of the
+hall. Therefore, the problem can be \textbf{restated as a decision problem in the following manner}:
+\\
+\\
+Suppose we have a lecture hall
+which is available from time t = 0. There are n activities, \(a_1, a_2, a_3, ..., a_n\), that apply
+for using the lecture hall. If the application of \(a_i (1 \leq i \leq n) \) is accepted, then it
+must start before or at \(s_i (\geq 0)\) and it must continuously use the hall for \(t_i\) time.
+Moreover, at any time, at most one activity is allowed to use the lecture hall. 
+\textbf{Can we select a set of compatible activities such that they occupy the
+ lecture hall for a duration of k units of time?}
+\\
+
+\textbf{F.4.B} Transformation of the set partition problem into an instance of this problem
+can be done using the following strategy.\\ \\
+The set partition problem is defined as follows: Given a set, \(S = \{v_1, v_2, v_3, ..., v_n\}\),
+can we partition that set into two subsets such that
+\begin{flalign*}
+    \sum_{v_i \in A}{v_i} &= \sum_{v_i \in S - A}{v_i}
+\end{flalign*}
+Following this transformation algorithm we can accomplish that task:
+\begin{enumerate}
+    \item Compute \(M = \sum_{v_i \in S}{v_i}\).
+    \item We can assume any number \(v_i\) in S is less than or equal to M/2. Otherwise,
+    no partition is possible and the transformation is trivial.
+    \item For each \(v_i \in A\), construct an activity such that:
+    \begin{flalign*}
+        t_i &= v_i &\\
+        s_i &= (M/2) - v_i
+    \end{flalign*}
+    \item For each \(v_i \in S - A\), construct an activity such that:
+    \begin{flalign*}
+        t_i &= v_i &\\
+        s_i &= M - v_i
+    \end{flalign*}
+    \item Set \(k = M\).
+\end{enumerate}
+
+% TODO: Do in step-by-step manner
+% \textbf{An explanation of correctness follows:} In this problem we have one lecture hall which we are
+% attempting to use for as long as possible. Given that desire, we want all of the activities
+% we produce to be compatible in this transformation. As such, the first step achieves computation
+% of the total sum of the vertices in the set S. Following step 1, we state that situations that
+% obviously cannot be partitioned aren't of interest here. Those transformations are pointless
+% in this context because our goal is to prove that transformation of the set partition problem
+% can successfully be done proving that our stated problem is in the class NP-hard. We omit the
+% bidirectional proof here because the question doesn't request it. Step 3 takes all elements in
+% the first partition and computes the required start time using the subset sum (M/2). Step 4
+% computes the same for the second partition but uses M. The reason for this difference is because
+% this problem specifically requests all activities to take place in \textbf{the same lecture hall}
+% unlike our homework problem which had two independent lecture halls. This means that all activities
+% must be compatible with each other. Finally, we set k = M, which is the total duration of use of
+% the lecture hall because \(t_i\) is derived from \(v_i\), which means that the sum of all \(t_i\)
+% being the maximal duration during which the hall will be used is equaled to M. These steps imply
+% that all activities are compatible, have the required start time and can be scheduled in the same
+% lecture hall for a total duration of M.
+
+\textbf{An explanation of logic follows. Each numer in the list below corresponds to the same numbered
+step above.}
+\begin{enumerate}
+    \item We compute the total sum of all values in S because that value is needed in steps that follow.
+    \item We assume all numbers are less than or equaled to M/2 because if that's not the case a valid
+    partition cannot be done satisfying the requirements of the set partition problem. Such sets simply
+    result in the answer No, and are therefore trivial.
+    \item For all \(v_i \in A\), we transform \(v_i\) directly into \(t_i\) because it is a sensical
+    approach to this transformation. The more interesting aspect of this step is transformation of
+    \(v_i\) into \(s_i\) by subtracting \(v_i\) from \((M/2)\). This is necessary because we can view
+    this subset of S as occurring in the first half of the time during which we have scheduled the 
+    lecture hall. All activities that result from this transformation will occupy the lecture hall at
+    some instance between time \(t_0\) and time \((M/2)\).
+    \item This step is necessarily separated from the previous step because we can view all of the
+    activities that take place in this subset as occuring after all of those that came from the 
+    subset A. All activities in the subset A occurred between \(t_0\) and \((M/2)\), whereas all
+    activities that result from this step will occur between time \((M/2)\) and \(M\). Therefore,
+    activities that are part of this second set, \(S - A\), have \(s_i\) calculated by subtracting
+    \(v_i\) from \(M\).
+    \item Finally, we need to set our k value. In our new problem, k is to represent the total
+    duration during which the lecture hall is occupied. Because \(M = \sum_{v_i \in S}{v_i}\) and
+    \(v_i\) was transformed to \(t_i\) directly and without operation (i.e, they are one-to-one),
+    \(M = \sum_{v_i \in S}{v_i} = \sum_{t_i \in A}{t_i} + \sum_{t_i \in S-A}{t_i} = \) the total
+    duration during which the lecture hall will be occupied. This value is, therefore, our desired
+    \(k\), which we defined as being the duration during which the lecture hall will be occupied.
+\end{enumerate}
+
+\end{document}
