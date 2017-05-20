@@ -20,72 +20,74 @@
 
 \begin{document}
 
-\begin{titlepage}
+% \begin{titlepage}
 
-    \begin{center}
-        \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
-        \large\textbf{Mid-term Make Up} \\        
-        \large\textit{Author: Hayden McParlane}
-    \end{center}
+%     \begin{center}
+%         \large\textbf{CS 5592: Design and Analysis of Algorithms} \\
+%         \large\textbf{Mid-term Make Up} \\        
+%         \large\textit{Author: Hayden McParlane}
+%     \end{center}
+% \end{titlepage}
 
-\end{titlepage}
 
-\encircle{F.3} 
-Given a sequence of n (n > 2) real numbers in an array, A[1], A[2],
-A[3], ..., A[n], we wish to find two numbers A[i] and A[j], where i < j, such that
-A[i] \(\leq\) A[j] and their distance is the largest. That is, 
-\begin{flalign*}
-    j - i &= \max\{ v - u \mid 1 \leq u < v \leq n \text{ and } A[u] \leq A[v]\}
-\end{flalign*}
-If no such pair, report -\(\infty\). Please design an \(\mathcal{O}(n \cdot lg n)\) algorithm
-to solve this problem. You can use any method , including divide and conquer, greedy
-or dynamic programming.
-\begin{flalign*}
-    &\\
-\end{flalign*}
-\textbf{The following should be noted about the algorithm below (in addition to
-the statements in the problem):}
-\begin{enumerate}
-        \item Function \Call{SortAndTrackIndices}{A, I} returns array A sorted in
-        non-decreasing order \((a_1 \leq a_2 \leq a_3 \leq ... \leq a_n)\) as well
-        as an array, \(I\), which maps each \(a_i\) to its original position, \(I_i\).        
-\end{enumerate}
+% \encircle{F.3} 
+% Given a sequence of n (n > 2) real numbers in an array, A[1], A[2],
+% A[3], ..., A[n], we wish to find two numbers A[i] and A[j], where i < j, such that
+% A[i] \(\leq\) A[j] and their distance is the largest. That is, 
+% \begin{flalign*}
+%     j - i &= \max\{ v - u \mid 1 \leq u < v \leq n \text{ and } A[u] \leq A[v]\}
+% \end{flalign*}
+% If no such pair, report -\(\infty\). Please design an \(\mathcal{O}(n \cdot lg n)\) algorithm
+% to solve this problem. You can use any method , including divide and conquer, greedy
+% or dynamic programming.
+% \begin{flalign*}
+%     &\\
+% \end{flalign*}
+% \textbf{The following should be noted about the algorithm below (in addition to
+% the statements in the problem):}
+% \begin{enumerate}
+%         \item Function \Call{SortAndTrackIndices}{A, I} returns array A sorted in
+%         non-decreasing order \((a_1 \leq a_2 \leq a_3 \leq ... \leq a_n)\) as well
+%         as an array, \(I\), which maps each \(a_i\) to its original position, \(I_i\).        
+% \end{enumerate}
 
-\begin{algorithm}[H]
-\caption{
-    Greedy solution to the problem above. Make sure to take note of the assumptions
-    above.        
-}
-\label{alg:algorithm-label}
-\begin{algorithmic}[1]
-\Function{MaxDist}{A, n}
-    \State $ I \gets \emptyset $
-    \State $ A, I \gets \Call{SortAndTrackIndices}{A, I} $    
-    \State $ i \gets \infty $
-    \State $ j \gets -\infty $
-    \\
-    \For{k from 1 to n}
-        \If{\(j < I[k]\)}
-            \State $ j \gets I[k] $
-        \EndIf
-    \EndFor    
-    \\
-    \For{k from n to 1}
-        \If{\(I[k] < i \text{ and } I[k] \neq j \text{ and } A[k] \leq A[j]\)}
-            \State $ i \gets I[k] $
-        \EndIf
-    \EndFor
-    \\
-    \If{\(i\) equals \(\infty\)}
-        \State $ \Return \text{ -}\infty $
-    \Else
-        \State $ \Return \text{ i and j} $
-    \EndIf
-    \\    
-\EndFunction
+% \begin{algorithm}[H]
+% \caption{
+%     Greedy solution to the problem above. Make sure to take note of the assumptions
+%     above.        
+% }
+% \label{alg:algorithm-label}
+% \begin{algorithmic}[1]
+% \Function{MaxDist}{A, n}        % low to high approach
+%     \State $ A, I \gets \Call{SortAndTrackIndices}{A} $    
+%     \State $ i_{max} \gets j_{max} \gets I[n] $
+%     \State $ i \gets j \gets I[n] $    
+%     \\
+%     \For{\(k\) from \(n\) - 1 to 1}
+%         \If{\(j < I[k]\)}
+%             \State $ i \gets I[k] $     
+%             \State $ j \gets I[k] $                   
+%         \Else
+%             \If{\(i > I[k]\)}                
+%                 \State $ i \gets I[k] $ 
+%             \EndIf            
+%         \EndIf
+%         \If{\(j - i > j_{max} - i_{max}\)}
+%             \State $ i_{max} \gets i $
+%             \State $ j_{max} \gets j $            
+%         \EndIf
+%     \EndFor
+%     \\
+%     \If{\(i_{max}\) equals \(j_{max}\)}
+%         \State $ \Return \text{ -}\infty $
+%     \Else
+%         \State $ \Return \textit{ i} \text{ and } \textit{j} $
+%     \EndIf
+%     \\    
+% \EndFunction
 
-\end{algorithmic}
-\end{algorithm}
+% \end{algorithmic}
+% \end{algorithm}
 
 \pagebreak
 \encircle{F.4} Consider the following activity selection problem. Suppose we have a lecture hall
@@ -143,25 +145,6 @@ Following this transformation algorithm we can accomplish that task:
     \end{flalign*}
     \item Set \(k = M\).
 \end{enumerate}
-
-% TODO: Do in step-by-step manner
-% \textbf{An explanation of correctness follows:} In this problem we have one lecture hall which we are
-% attempting to use for as long as possible. Given that desire, we want all of the activities
-% we produce to be compatible in this transformation. As such, the first step achieves computation
-% of the total sum of the vertices in the set S. Following step 1, we state that situations that
-% obviously cannot be partitioned aren't of interest here. Those transformations are pointless
-% in this context because our goal is to prove that transformation of the set partition problem
-% can successfully be done proving that our stated problem is in the class NP-hard. We omit the
-% bidirectional proof here because the question doesn't request it. Step 3 takes all elements in
-% the first partition and computes the required start time using the subset sum (M/2). Step 4
-% computes the same for the second partition but uses M. The reason for this difference is because
-% this problem specifically requests all activities to take place in \textbf{the same lecture hall}
-% unlike our homework problem which had two independent lecture halls. This means that all activities
-% must be compatible with each other. Finally, we set k = M, which is the total duration of use of
-% the lecture hall because \(t_i\) is derived from \(v_i\), which means that the sum of all \(t_i\)
-% being the maximal duration during which the hall will be used is equaled to M. These steps imply
-% that all activities are compatible, have the required start time and can be scheduled in the same
-% lecture hall for a total duration of M.
 
 \textbf{An explanation of logic follows. Each numer in the list below corresponds to the same numbered
 step above.}
